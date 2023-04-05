@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="width=device-width ,initial-scale=1.0"
+    />
+    <title>Website With Login & Registration</title>
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css
+    "
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+      <!-- action為提交網址url -->
+      <form action="#" class="search-bar">
+        <input type="text" placeholder="Search....." />
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </header>
+
+    <div class="background"></div>
+    <div class="container">
+      <div class="content">
+        <h2 class="logo"><i class="fa-solid fa-basketball"></i>Howard Blog</h2>
+        <div class="scription">
+          <h2>Welcome!<br /><span> To My New Website!!!</span></h2>
+          <p>
+            If you have any question,you can contact me through the following
+            contact information Let start to blogging your life!!
+          </p>
+          <div class="social-icons">
+            <a href="#" class="facebook"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a href="#" class="google"><i class="fa-brands fa-google"></i></a>
+            <a href="#" class="github"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="log-box">
+        <div class="form-box login">
+          <form action="#">
+            <h2>Sign In</h2>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" type="text" required />
+              <label>Email</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon"> <i class="fa-solid fa-key"></i> </span>
+              <input autocomplete="off" type="password" required />
+              <!-- required為必填輸入 -->
+              <label>Password</label>
+            </div>
+            <div class="remember-forget">
+              <label><input type="checkbox" />Remember me </label>
+              <a href="#">forget password</a>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+            <div class="login-register">
+              <p>
+                Dont have an account?<a href="#" class="register-link"
+                  >Sign up</a
+                >
+              </p>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-box register">
+          <form action="#">
+            <h2>Sign Up</h2>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-solid fa-user-plus"></i>
+              </span>
+              <input autocomplete="off" type="text" required />
+              <!-- required為必填輸入 -->
+              <label>Name</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" type="email" required />
+              <!-- required為必填輸入 -->
+              <label>Email</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-solid fa-key"></i>
+              </span>
+              <input autocomplete="off" type="password" required />
+              <!-- required為必填輸入 -->
+              <label>Password</label>
+            </div>
+
+            <div class="remember-forget">
+              <label
+                ><input type="checkbox" />I agree to the tems & conditions
+              </label>
+            </div>
+            <button type="submit" class="btn">Sign Up</button>
+            <div class="login-register">
+              <p>
+                Already have an account?<a href="#" class="login-link"
+                  >Sign in</a
+                >
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src ="script.js"></script>
+    </script>
+  </body>
+</html>
