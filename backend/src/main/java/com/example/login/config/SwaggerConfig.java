@@ -15,6 +15,10 @@ import org.springframework.context.annotation.Configuration;
  * read more 功能，點選之後可以觀看完整文章
  * 分頁功能
  */
+
+/**
+ * <Swagger URI><a href="http://localhost:8080/swagger-ui/index.html">
+ */
 @Configuration
 public class SwaggerConfig {
 

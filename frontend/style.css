@@ -9,8 +9,8 @@ body {
 }
 .header {
   position: absolute;
-  top: 0;
-  left: 0;
+  /* top: 0;
+  left: 0; */
   width: 100%;
   padding: 25px 12.5%;
   background-color: transparent;
@@ -87,11 +87,9 @@ body {
   left: 50%;
   transform: translate(-50%, -50%); /*上下置中*/
   width: 75%;
-  height: 550px;
-  background: url("background.jpg");
-  background-repeat: no-repeat;
+  height: 75vh;
   background-size: cover;
-  background-position: center;
+  background: url("background.jpg") no-repeat center;
   border-radius: 10px;
   margin-top: 20px;
   image-rendering: auto;
@@ -183,7 +181,7 @@ body {
 .form-box .input-box {
   position: relative;
   width: 340px;
-  height: 50px;
+  height: 45px;
   border-bottom: 2px solid aliceblue;
   margin: 30px 0;
 }
@@ -272,7 +270,7 @@ body {
 }
 .login-register p a:hover {
   text-decoration: underline;
-  /* transform: scale(1.2); */
+   transform: scale(1.2); 
 }
 .background {
   width: 100%;

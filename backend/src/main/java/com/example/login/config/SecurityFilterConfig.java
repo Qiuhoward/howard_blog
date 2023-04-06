@@ -7,18 +7,25 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @EnableWebSecurity
 @Configuration
-public class SecurityFilterConfig{
+public class SecurityFilterConfig {
+
+    private static final String[] AUTH_PERMISSION_LIST = {
+            "/auth/**",
+            "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
+            "/swagger-ui/**",//訪問swagger地址
+    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests().requestMatchers("/auth/**")
+
+        http.authorizeHttpRequests().requestMatchers(AUTH_PERMISSION_LIST)
                 .permitAll()
-                .requestMatchers("/swagger-ui/index.html#/**")
-                .permitAll()
-                .anyRequest().permitAll()
-                .and().csrf().disable();
+                .anyRequest().authenticated()
+                .and()
+                .cors().and().csrf().disable();
 
         return http.build();
     }
