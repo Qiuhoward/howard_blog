@@ -7,25 +7,32 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.Hibernate;
-
-import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
-    private String postName;
+    private String content;
     private String postPeople;
     private String title;
-    private Date createAt;
+    private long createAt;
 
+
+
+//    public void addPost(PostDto request, PostRepo repo) {
+//       this.createAt=System.currentTimeMillis();
+//       this.postPeople= request.getPostPeople();
+//       this.title=request.getTitle();
+//      //傳給留言的add comment把留言存起來 =request.getId();
+//    }
 
     @Override
     public boolean equals(Object o) {
