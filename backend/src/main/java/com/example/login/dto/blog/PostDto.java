@@ -7,9 +7,14 @@ import lombok.Getter;
  * 暫定post都用這個dto
  */
 
-@Builder
+
 @Getter
+@Builder
 public class PostDto extends BasicDto {
+    private String postPeople;
+    private String content;
+    private String Title;
+
     public PostDto() {
         super();
     }

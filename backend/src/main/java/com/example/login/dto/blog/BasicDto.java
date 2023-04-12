@@ -6,5 +6,5 @@ import java.util.Date;
 @Data
 public class BasicDto {
     private int id;
-    private Date createAt;
+
 }
