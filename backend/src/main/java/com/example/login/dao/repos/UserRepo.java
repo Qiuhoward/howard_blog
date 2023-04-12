@@ -1,5 +1,6 @@
-package com.example.login.dao;
+package com.example.login.dao.repos;
 
+import com.example.login.dao.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
