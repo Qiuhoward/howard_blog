@@ -3,7 +3,7 @@
 ### let do it !!!!(Unfinish)
 
 
-![image](https://user-images.githubusercontent.com/114131391/230068858-9ad6e951-a68e-4b2f-a838-767053a9a8a7.png)
+![image](https://user-images.githubusercontent.com/114131391/231535993-23a4483f-5d04-4d74-a6b1-9262f9f0e04f.png)
 
 
 ### Technology Stack
