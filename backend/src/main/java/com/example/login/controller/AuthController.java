@@ -1,9 +1,9 @@
 package com.example.login.controller;
 
-import com.example.login.dto.LoginRequest;
-import com.example.login.dto.LoginResponse;
-import com.example.login.dto.RegisterRequest;
-import com.example.login.dto.RegisterResponse;
+import com.example.login.dto.account.LoginRequest;
+import com.example.login.dto.account.LoginResponse;
+import com.example.login.dto.account.RegisterRequest;
+import com.example.login.dto.account.RegisterResponse;
 import com.example.login.service.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

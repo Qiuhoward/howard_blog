@@ -1,6 +1,7 @@
-package com.example.login.dao;
+package com.example.login.dao.entities;
 
-import com.example.login.dto.RegisterRequest;
+import com.example.login.dao.Provider;
+import com.example.login.dto.account.RegisterRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -24,8 +25,11 @@ public class User {
     private Date createAt;
     private Date lastTime;
 
+    private Integer PostId ;
+
     @Enumerated(EnumType.STRING)
     private Provider provider;
+
 
     public User(RegisterRequest request) {
         this.age=request.getAge();

@@ -2,12 +2,12 @@ package com.example.login.service;
 
 import com.example.login.controller.EventError;
 import com.example.login.controller.InternalServerException;
-import com.example.login.dao.User;
-import com.example.login.dao.UserRepo;
-import com.example.login.dto.LoginRequest;
-import com.example.login.dto.LoginResponse;
-import com.example.login.dto.RegisterRequest;
-import com.example.login.dto.RegisterResponse;
+import com.example.login.dao.entities.User;
+import com.example.login.dao.repos.UserRepo;
+import com.example.login.dto.account.LoginRequest;
+import com.example.login.dto.account.LoginResponse;
+import com.example.login.dto.account.RegisterRequest;
+import com.example.login.dto.account.RegisterResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
