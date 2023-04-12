@@ -1,15 +1,11 @@
 package com.example.login.dao;
 
 import com.example.login.dto.RegisterRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import java.util.Date;
 import java.util.Objects;
-
 
 @Entity
 @Getter
@@ -28,6 +24,8 @@ public class User {
     private Date createAt;
     private Date lastTime;
 
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     public User(RegisterRequest request) {
         this.age=request.getAge();
@@ -43,7 +41,6 @@ public class User {
     public User() {
 
     }
-
 
     @Override
     public boolean equals(Object o) {
