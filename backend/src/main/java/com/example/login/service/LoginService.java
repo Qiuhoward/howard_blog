@@ -1,5 +1,6 @@
 package com.example.login.service;
 
+import com.example.login.controller.EventError;
 import com.example.login.controller.InternalServerException;
 import com.example.login.dao.User;
 import com.example.login.dao.UserRepo;
@@ -31,7 +32,7 @@ public class LoginService {
                 userRepo.findUserByAccountAndPassword(request.getAccount(), request.getPassword());
 
         if (user.isEmpty()) {
-            throw new InternalServerException("帳號或密碼錯誤");
+            throw new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString());
         }
         user.get().setLastTime(new Date());
         userRepo.save(user.get());
@@ -44,23 +45,26 @@ public class LoginService {
 
     public RegisterResponse register(RegisterRequest request) throws InternalServerException {
         log.info("進入註冊環節 -> 參數為{}", request);
+
         if (!Objects.equals(request.getPassword1(), request.getPassword2())) {
-            throw new InternalServerException("密碼輸入不一致");
+            throw new InternalServerException(EventError.PASSWORD_IS_NOT_SAME.toString());
         }
         if (!userRepo.findUserByAccount(request.getAccount()).isEmpty()) {
-            throw new InternalServerException("帳號已存在");
+            throw new InternalServerException(EventError.ACCOUNT_IS_EXIST.toString());
         }
         if (!userRepo.findUserByMobile(request.getMobile()).isEmpty()) {
-            throw new InternalServerException("手機號碼已註冊過");
+            throw new InternalServerException(EventError.PHONE_IS_SIGN_UP.toString());
         }
 
         encode(request.getPassword1());
 
         var user=new User(request);
+        var status="新增成功";
+
         user.setPassword(encode(request.getPassword1()));
         userRepo.save(user);
         return RegisterResponse.builder()
-                .status("新增成功")
+                .status(status)
                 .build();
     }
 

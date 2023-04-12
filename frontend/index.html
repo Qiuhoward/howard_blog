@@ -50,18 +50,21 @@
             contact information Let start to blogging your life!!
           </p>
           <div class="social-icons">
-            <a href="#" class="facebook"
+            <a href="https://www.facebook.com/profile.php?id=100011345830329"  target="_blank" class="facebook"
               ><i class="fa-brands fa-facebook"></i
             ></a>
             <a href="#" class="google"><i class="fa-brands fa-google"></i></a>
-            <a href="#" class="github"><i class="fa-brands fa-github"></i></a>
+            <a href="https://github.com/Qiuhoward" target="_blank" class="github"><i class="fa-brands fa-github"></i></a>
             <a href="#" class="instagram"
               ><i class="fa-brands fa-instagram"></i
             ></a>
           </div>
         </div>
       </div>
+      
       <div class="log-box">
+        <script src="https://accounts.google.com/gsi/client" async defer></script> 
+   
         <div class="form-box login">
           <form action="#">
             <h2>Sign In</h2>
@@ -92,8 +95,21 @@
                 >
               </p>
             </div>
+         
+            <div class="social-icons sign-in" >
+              <a href="#"  target="_blank" class="facebook"
+                ><i class="fa-brands fa-facebook"></i
+              ></a>
+              <a href="http://localhost:8080/oauth2/authorization/google" target="_blank"  class="google">
+                <i class="fa-brands fa-google"></i>
+              </a>
+              <a href="http://localhost:8080/oauth2/authorization/github" target="_blank" class="github">
+                <i class="fa-brands fa-github"></i>
+              </a>
+            </div>
           </form>
         </div>
+        
 
         <div class="form-box register">
           <form action="#">
@@ -145,7 +161,7 @@
     </div>
     <script src ="script.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src ="api.js"></script>
+    <!-- <script src ="api.js"></script> -->
     </script>
   </body>
 </html>
