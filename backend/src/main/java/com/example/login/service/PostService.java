@@ -7,6 +7,8 @@ import com.example.login.dao.repos.UserRepo;
 import com.example.login.dto.blog.PostDto;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.Instant;
 import java.util.List;
 
 
@@ -25,23 +27,22 @@ public class PostService implements BasicService{
     public String addPost(PostDto request) {
         var post = Post.builder()
                 .postPeople(request.getPostPeople())
-                .createAt(System.currentTimeMillis())
+                .createAt(Date.from(Instant.now()))
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
 
         postRepo.save(post);
 
-        return "修改成功";
+        return "新增成功";
     }
 
 
 //傳給留言的add comment把留言存起來 =request.getId();
 
     @Override
-    public String delete(String name, int postId) {
+    public void delete(int postId,String name) {
         postRepo.deletePostByPostIdAndPostPeople(postId,name).orElseThrow();
-        return "刪除成功";
     }
 
 

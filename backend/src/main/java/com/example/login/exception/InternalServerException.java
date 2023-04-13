@@ -1,4 +1,4 @@
-package com.example.login.controller;
+package com.example.login.exception;
 
 /**
  * <伺服器例外處理></伺服器例外處理>

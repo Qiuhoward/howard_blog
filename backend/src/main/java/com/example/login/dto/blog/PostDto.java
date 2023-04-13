@@ -1,7 +1,6 @@
 package com.example.login.dto.blog;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 /**
  * 暫定post都用這個dto
@@ -10,10 +9,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
+@AllArgsConstructor
+
 public class PostDto extends BasicDto {
     private String postPeople;
     private String content;
-    private String Title;
+    private String title;
 
     public PostDto() {
         super();

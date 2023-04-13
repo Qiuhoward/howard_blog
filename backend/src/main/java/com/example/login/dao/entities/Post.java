@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.Hibernate;
+
+import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -23,7 +25,7 @@ public class Post {
     private String content;
     private String postPeople;
     private String title;
-    private long createAt;
+    private Date createAt;
 
 
 
