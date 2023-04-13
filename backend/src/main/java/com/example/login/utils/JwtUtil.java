@@ -7,11 +7,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 @Component
@@ -21,9 +23,11 @@ public class JwtUtil {
     private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
     private static final String secretKey = "E)H@McQfTjWnZq4t7w!z%C*F-JaNdRgU";
     private final PasswordEncoder passwordEncoder;
+    private final StringRedisTemplate redisTemplate;
 
-    public JwtUtil(PasswordEncoder passwordEncoder) {
+    public JwtUtil(PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
         this.passwordEncoder = passwordEncoder;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -50,6 +54,7 @@ public class JwtUtil {
 
     public RegisterResponse getTokenAndStoreRedis(User user) {
         var token = generateToken(user);
+        redisTemplate.expire(token,5, TimeUnit.MINUTES);
         return RegisterResponse.builder()
                 .token(token)
                 .status("傳送token")
