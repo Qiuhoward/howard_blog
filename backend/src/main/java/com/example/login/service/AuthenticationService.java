@@ -8,9 +8,9 @@ import com.example.login.dto.account.LoginRequest;
 import com.example.login.dto.account.LoginResponse;
 import com.example.login.dto.account.RegisterRequest;
 import com.example.login.dto.account.RegisterResponse;
+import com.example.login.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Objects;
@@ -18,9 +18,11 @@ import java.util.Objects;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class LoginService {
+public class AuthenticationService {
     private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;
+
+
+    private final JwtUtil jwtUtil;
 
 
     public LoginResponse login(LoginRequest request) throws InternalServerException {
@@ -56,20 +58,14 @@ public class LoginService {
             throw new InternalServerException(EventError.PHONE_IS_SIGN_UP.toString());
         }
 
-        encode(request.getPassword1());
+        var encodePassword = jwtUtil.encode(request.getPassword1());
+        var user = new User(request);
 
-        var user=new User(request);
-        var status="新增成功";
-
-        user.setPassword(encode(request.getPassword1()));
+        user.setPassword(encodePassword);
         userRepo.save(user);
-        return RegisterResponse.builder()
-                .status(status)
-                .build();
+
+        return jwtUtil.getTokenAndStoreRedis(user);
     }
 
-    public String encode(String password) {
-      return  passwordEncoder.encode(password);
-    }
 
 }

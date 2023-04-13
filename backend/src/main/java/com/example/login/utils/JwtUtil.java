@@ -2,11 +2,14 @@ package com.example.login.utils;
 
 
 import com.example.login.dao.entities.User;
+import com.example.login.dto.account.RegisterResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 
@@ -17,6 +20,11 @@ public class JwtUtil {
     private static final int expireTime = 1000 * 600;
     private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
     private static final String secretKey = "E)H@McQfTjWnZq4t7w!z%C*F-JaNdRgU";
+    private final PasswordEncoder passwordEncoder;
+
+    public JwtUtil(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      * <產生token></產生token>
@@ -39,10 +47,14 @@ public class JwtUtil {
                 .compact();
     }
 
-//
-//    public String getToken() {
-//        return ;
-//    }
+
+    public RegisterResponse getTokenAndStoreRedis(User user) {
+        var token = generateToken(user);
+        return RegisterResponse.builder()
+                .token(token)
+                .status("傳送token")
+                .build();
+    }
 
     /**
      * secretKey字串經過base64解密成bytes再轉成key
@@ -50,5 +62,10 @@ public class JwtUtil {
     public Key getKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+
+    public String encode(String password) {
+        return passwordEncoder.encode(password);
     }
 }
