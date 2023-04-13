@@ -11,13 +11,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityFilterConfig {
 
-//    @Value("${google_redirect_uri}")
-//    private String REDIRECT_URL;
-    private static final String[] AUTH_PERMISSION_LIST = {
+
+    private final String[] AUTH_PERMISSION_LIST = {
             "/auth/**",
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
             "/swagger-ui/**",//訪問swagger地址
-
+            "/post/**"
     };
 
     @Bean

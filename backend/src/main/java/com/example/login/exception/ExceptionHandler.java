@@ -1,4 +1,4 @@
-package com.example.login.controller;
+package com.example.login.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

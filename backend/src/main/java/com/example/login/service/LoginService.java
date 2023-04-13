@@ -1,7 +1,7 @@
 package com.example.login.service;
 
-import com.example.login.controller.EventError;
-import com.example.login.controller.InternalServerException;
+import com.example.login.exception.EventError;
+import com.example.login.exception.InternalServerException;
 import com.example.login.dao.entities.User;
 import com.example.login.dao.repos.UserRepo;
 import com.example.login.dto.account.LoginRequest;

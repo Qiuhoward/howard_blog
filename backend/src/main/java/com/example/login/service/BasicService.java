@@ -11,6 +11,6 @@ import java.util.Optional;
  */
 public interface BasicService{
 
-    void  delete(String name, int id);
+    void delete(int id,String name);
     List<?> findAll();
 }

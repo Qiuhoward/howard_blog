@@ -1,4 +1,4 @@
-package com.example.login.controller;
+package com.example.login.exception;
 
 public enum EventError {
 

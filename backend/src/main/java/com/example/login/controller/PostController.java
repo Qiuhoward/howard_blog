@@ -20,27 +20,26 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public String addPost(@RequestBody PostDto postDto) {
         return postService.addPost(postDto);
     }
 
-    @PutMapping("edit")
+    @PutMapping("/edit")
     public String editPost(String name, int postId, String content, String title) {
 
         return postService.edit(name, postId, content, title);
     }
 
-    @GetMapping("find_all")
+    @GetMapping("/find_all")
     public List<Post> findAll() {
 
         return postService.findAll();
     }
 
-    @DeleteMapping("delete")
-    public String Post(String name, int postId) {
-
-        return postService.delete(name, postId);
+    @DeleteMapping("/delete")
+    public void Post( int postId,String name) {
+        postService.delete(postId,name);
     }
 
 }
