@@ -12,8 +12,8 @@ import com.example.login.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
-import java.util.Objects;
 
 @Service
 @Slf4j
@@ -21,37 +21,39 @@ import java.util.Objects;
 public class AuthenticationService {
     private final UserRepo userRepo;
 
-
     private final JwtUtil jwtUtil;
 
 
     public LoginResponse login(LoginRequest request) throws InternalServerException {
         log.info("進入登入 -> 參數為{}", request);
-        if (userRepo.findUserByAccount(request.getAccount()).isEmpty()) {
-            throw new InternalServerException("帳號不存在");
-        }
-        var user =
-                userRepo.findUserByAccountAndPassword(request.getAccount(), request.getPassword());
 
-        if (user.isEmpty()) {
-            throw new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString());
-        }
-        user.get().setLastTime(new Date());
-        userRepo.save(user.get());
+        //use java8 optional checked null
+        userRepo.findUserByAccount(request.getAccount()).orElseThrow(
+                () -> new InternalServerException(EventError.ACCOUNT_IS_NOT_EXIST.toString())
+        );
+
+        var user =
+                userRepo.findUserByAccountAndPassword(request.getAccount(), request.getPassword())
+                        .orElseThrow(() -> // no arguments
+                                new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString()));
+
+        user.setLastTime(new Date());
+        userRepo.save(user);
 
         return LoginResponse
                 .builder()
-                .user(user.get())
+                .token(jwtUtil.generateToken(user))
+                .user(user)
                 .build();
     }
 
     public RegisterResponse register(RegisterRequest request) throws InternalServerException {
         log.info("進入註冊環節 -> 參數為{}", request);
 
-        if (!Objects.equals(request.getPassword1(), request.getPassword2())) {
+        if (!request.getPassword1().equals(request.getPassword2())) {
             throw new InternalServerException(EventError.PASSWORD_IS_NOT_SAME.toString());
         }
-        if (!userRepo.findUserByAccount(request.getAccount()).isEmpty()) {
+        if (userRepo.findUserByAccount(request.getAccount()).isPresent()) {
             throw new InternalServerException(EventError.ACCOUNT_IS_EXIST.toString());
         }
         if (!userRepo.findUserByMobile(request.getMobile()).isEmpty()) {
