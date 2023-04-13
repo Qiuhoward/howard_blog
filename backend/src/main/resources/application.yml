@@ -1,0 +1,39 @@
+spring:
+
+  #MariaDB
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mariadb://localhost/blog
+
+
+  #JPA
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    open-in-view: true
+    show-sql: false
+
+
+  #Redis  configuration unFinish
+  data:
+    redis:
+      port: 6379
+
+  # sso
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+          github:
+            client-id:
+            client-secret:
+
+
+
+
