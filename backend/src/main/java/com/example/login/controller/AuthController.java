@@ -5,7 +5,7 @@ import com.example.login.dto.account.LoginResponse;
 import com.example.login.dto.account.RegisterRequest;
 import com.example.login.dto.account.RegisterResponse;
 import com.example.login.exception.InternalServerException;
-import com.example.login.service.LoginService;
+import com.example.login.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "auth")
 public class AuthController {
-    private final LoginService service;
+    private final AuthenticationService service;
 
     @PostMapping(value = "/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request) throws InternalServerException {

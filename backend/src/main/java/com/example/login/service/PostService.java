@@ -3,7 +3,6 @@ package com.example.login.service;
 
 import com.example.login.dao.entities.Post;
 import com.example.login.dao.repos.PostRepo;
-import com.example.login.dao.repos.UserRepo;
 import com.example.login.dto.blog.PostDto;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,11 @@ import java.util.List;
 public class PostService implements BasicService{
 
     private final PostRepo postRepo;
-    private final UserRepo userRepo;
 
-    public PostService(PostRepo postRepo, UserRepo userRepo) {
+
+    public PostService(PostRepo postRepo) {
         this.postRepo = postRepo;
-        this.userRepo = userRepo;
+
     }
 
 
