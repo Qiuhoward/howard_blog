@@ -1,6 +1,5 @@
-package com.example.login.dao.repos;
+package com.example.login.dao.user;
 
-import com.example.login.dao.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -9,8 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepo extends JpaRepository<User,Integer> {
-    Optional<User> findUserByAccount(String account);
+    Optional<User> findUserByUserName(String email);
     List<User> findUserByMobile(String mobile);
 
-    Optional<User> findUserByAccountAndPassword(String account, String password);
+    Optional<User> findUserByUserNameAndPassword(String email, String password);
 }

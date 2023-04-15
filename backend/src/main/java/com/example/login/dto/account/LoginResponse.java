@@ -1,6 +1,6 @@
 package com.example.login.dto.account;
 
-import com.example.login.dao.entities.User;
+import com.example.login.dao.user.User;
 import lombok.Builder;
 
 

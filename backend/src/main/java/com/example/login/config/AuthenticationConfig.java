@@ -1,6 +1,6 @@
 package com.example.login.config;
 
-import com.example.login.dao.repos.UserRepo;
+import com.example.login.dao.user.UserRepo;
 import com.example.login.exception.EventError;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ public class AuthenticationConfig {
     //載入userDetailService類(bean裡面是有真的userDetail的資料)
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> (UserDetails) repo.findUserByAccount(username).orElseThrow(
+        return username -> (UserDetails) repo.findUserByUserName(username).orElseThrow(
                 () -> new UsernameNotFoundException(EventError.ACCOUNT_IS_NOT_EXIST.toString()));
     }
 

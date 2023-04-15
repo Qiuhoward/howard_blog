@@ -1,17 +1,21 @@
 package com.example.login.utils;
 
-import com.example.login.dao.entities.User;
+import com.example.login.dao.user.User;
 import com.example.login.dto.account.RegisterResponse;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 @Component
 public class JwtUtil {
@@ -43,7 +47,7 @@ public class JwtUtil {
     public String generateToken(User user) {
         return Jwts.builder()
                 .setIssuer("howard")
-                .setSubject(user.getAccount())//帳號不是名字
+                .setSubject(user.getUsername())//帳號不是名字
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(getKey(), alg)//鑰匙和演算法執行簽名
@@ -53,14 +57,42 @@ public class JwtUtil {
 
     public RegisterResponse getTokenAndStoreRedis(User user) {
         var token = generateToken(user);
-
-        redisTemplate.expire(token,5, TimeUnit.MINUTES);
-
+        redisTemplate.opsForValue().set(user.getName(), token);
+        redisTemplate.expire(token, 5, TimeUnit.MINUTES);
         return RegisterResponse.builder()
                 .token(token)
                 .status("傳送token")
                 .build();
     }
+    private Boolean isTokenExpired(String token){
+        return extraExpired(token).before(new Date());//在現在之前過期回傳true
+    }
+
+    private Date extraExpired(String token) {
+        return extraClaim(token,Claims::getExpiration);
+    }
+    public boolean isTokenValid(String token,UserDetails user){
+        final String userName= extraUserName(token);
+        return userName.equals(user.getUsername())&& !isTokenExpired(token);
+    }                                                                                                         {
+
+    }
+    public String extraUserName(String token){
+        return extraClaim(token,Claims::getSubject);
+    }
+    public <T>T extraClaim(String token,Function<Claims,T>function){
+        final Claims claims=extraAllClaim(token);
+        return function.apply(claims);
+    }
+    public Claims extraAllClaim(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+
 
     /**
      * secretKey字串經過base64解密成bytes再轉成key

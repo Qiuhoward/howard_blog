@@ -1,8 +1,8 @@
 package com.example.login.service;
 
 
-import com.example.login.dao.entities.Post;
-import com.example.login.dao.repos.PostRepo;
+import com.example.login.dao.post.Post;
+import com.example.login.dao.post.PostRepo;
 import com.example.login.dto.blog.PostDto;
 import org.springframework.stereotype.Service;
 

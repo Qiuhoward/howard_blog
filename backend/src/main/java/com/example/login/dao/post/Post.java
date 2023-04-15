@@ -1,4 +1,4 @@
-package com.example.login.dao.entities;
+package com.example.login.dao.post;
 
 
 import jakarta.persistence.Entity;

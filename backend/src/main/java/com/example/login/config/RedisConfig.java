@@ -14,6 +14,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
     private  final RedisConnectionFactory redisConnectionFactory;
 
+    public RedisConfig(RedisConnectionFactory redisConnectionFactory) {
+        this.redisConnectionFactory = redisConnectionFactory;
+    }
+
     private RedisConfig(){
         this.redisConnectionFactory=new JedisConnectionFactory();
     }

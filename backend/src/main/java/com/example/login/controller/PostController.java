@@ -1,6 +1,6 @@
 package com.example.login.controller;
 
-import com.example.login.dao.entities.Post;
+import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.service.PostService;
 import org.springframework.web.bind.annotation.*;

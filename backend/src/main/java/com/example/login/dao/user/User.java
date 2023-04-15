@@ -1,25 +1,29 @@
-package com.example.login.dao.entities;
+package com.example.login.dao.user;
 
-import com.example.login.dao.Provider;
 import com.example.login.dto.account.RegisterRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @ToString
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-    private Integer age;
     private String name;
-    private String email;
-    private String account;
+
+    private String userName;
     private String password;
     private String mobile;
     private Date createAt;
@@ -32,20 +36,16 @@ public class User {
 
 
     public User(RegisterRequest request) {
-        this.age=request.getAge();
-        this.account=request.getAccount();
-        this.password=request.getPassword1();
-        this.email=request.getEmail();
+        this.password=request.getPassword();
+        this.userName=request.getEmail();
         this.mobile=request.getMobile();
         this.createAt=new Date();
         this.lastTime=new Date();
         this.name=request.getName();
     }
-
     public User() {
 
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -60,4 +60,33 @@ public class User {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("user"));
+    }//授權部分
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
