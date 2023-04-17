@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
 
-    private static final int expireTime = 1000 * 600;
+    private static final int expireTime = 1000 * 10;
     private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
     private static final String secretKey = "EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527";
     private final PasswordEncoder passwordEncoder;
@@ -64,26 +64,29 @@ public class JwtUtils {
                 .status("傳送token")
                 .build();
     }
-    private Boolean isTokenExpired(String token){
-        return extraExpired(token).before(new Date());//在現在之前過期回傳true
-    }
+
+    private Boolean isTokenExpired(String token) {
+        return extraExpired(token).before(new Date());
+    }  //在現在之前過期回傳true
 
     private Date extraExpired(String token) {
-        return extraClaim(token,Claims::getExpiration);
+        return extraClaim(token, Claims::getExpiration);
     }
-    public boolean isTokenValid(String token,UserDetails user){
-        final String userName= extraUserName(token);
-        return userName.equals(user.getUsername())&& !isTokenExpired(token);
-    }                                                                                                         {
 
+    public boolean isTokenValid(String token, UserDetails user) {
+        final String userName = extraUserName(token);
+        return userName.equals(user.getUsername()) && !isTokenExpired(token);
     }
-    public String extraUserName(String token){
-        return extraClaim(token,Claims::getSubject);
+
+    public String extraUserName(String token) {
+        return extraClaim(token, Claims::getSubject);
     }
-    public <T>T extraClaim(String token,Function<Claims,T>function){
-        final Claims claims=extraAllClaim(token);
+
+    public <T> T extraClaim(String token, Function<Claims, T> function) {
+        final Claims claims = extraAllClaim(token);
         return function.apply(claims);
     }
+
     public Claims extraAllClaim(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
@@ -91,7 +94,6 @@ public class JwtUtils {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 
 
     /**

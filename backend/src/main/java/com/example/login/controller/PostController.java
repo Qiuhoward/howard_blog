@@ -3,6 +3,7 @@ package com.example.login.controller;
 import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.service.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 
 @RestController
+@Tag(name = "文章")
 @RequestMapping(value = "post")
 public class PostController {
     private final PostService postService;
