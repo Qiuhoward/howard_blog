@@ -18,16 +18,16 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Component
-public class JwtUtil {
+public class JwtUtils {
 
     private static final int expireTime = 1000 * 600;
     private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
-    private static final String secretKey = "E)H@McQfTjWnZq4t7w!z%C*F-JaNdRgU";
+    private static final String secretKey = "EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527";
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
 
-    public JwtUtil(PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
+    public JwtUtils(PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
         this.passwordEncoder = passwordEncoder;
         this.redisTemplate = redisTemplate;
 

@@ -1,13 +1,12 @@
 package com.example.login.filter;
 
 
-import com.example.login.dao.user.User;
-import com.example.login.utils.JwtUtil;
+import com.example.login.utils.JwtUtils;
+import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,32 +25,37 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final JwtUtil jwtUtil;
+    private final JwtUtils jwtUtils;
     private final UserDetailsService userDetailsService;
 
-    public JwtFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
-        this.jwtUtil = jwtUtil;
+    public JwtFilter(JwtUtils jwtUtils, UserDetailsService userDetailsService) {
+        this.jwtUtils = jwtUtils;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", request.getMethod());
+        response.setHeader("content-type","application/json");
+        response.setHeader(
+                "Access-Control-Allow-Headers", "authorization, content-type, xsrf-token, token");
         log.info("進行過濾");
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userName;
         log.info("header:{}", authHeader);
-        if (authHeader == null || authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return;
+            return ;
         }
         jwt = authHeader.substring(7);
-        userName = jwtUtil.extraUserName(jwt);
+        userName = jwtUtils.extraUserName(jwt);
 
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             var user = this.userDetailsService.loadUserByUsername(userName);
-            if (jwtUtil.isTokenValid(jwt, user)) {
+            if (jwtUtils.isTokenValid(jwt, user)) {
                 //UsernamePasswordAuthenticationToken的作用就是代表一個被驗證的請求對象，並在通過驗證後裝載使用者完整資訊的對象，
                 // 這些資訊包括使用者名稱(username)，密碼(password)，權限(authorities)等。
                 var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());

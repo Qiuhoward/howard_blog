@@ -8,11 +8,11 @@ import com.example.login.dto.account.LoginRequest;
 import com.example.login.dto.account.LoginResponse;
 import com.example.login.dto.account.RegisterRequest;
 import com.example.login.dto.account.RegisterResponse;
-import com.example.login.utils.JwtUtil;
+import com.example.login.utils.BcryptUtils;
+import com.example.login.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 
 @Service
@@ -20,27 +20,29 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepo userRepo;
-    private final JwtUtil jwtUtil;
+    private final JwtUtils jwtUtils;
+    private final BcryptUtils bcryptUtils;
 
     public LoginResponse login(LoginRequest request) throws InternalServerException {
         log.info("進入登入 -> 參數為{}", request);
 
         //use java8 optional checked null
-        userRepo.findUserByUserName(request.getEmail()).orElseThrow(
+      var user=  userRepo.findUserByUserName(request.getEmail()).orElseThrow(
                 () -> new InternalServerException(EventError.ACCOUNT_IS_NOT_EXIST.toString())
         );
 
-        var user =
-                userRepo.findUserByUserNameAndPassword(request.getEmail(), request.getPassword())
-                        .orElseThrow(() -> // no arguments
-                                new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString()));
+        var result=bcryptUtils.checkPassword(request.getPassword(),user.getPassword());
 
+        if(!result){
+            throw new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString());
+        }
+        log.info("成功登入");
         user.setLastTime(new Date());
         userRepo.save(user);
 
         return LoginResponse
                 .builder()
-                .token(jwtUtil.generateToken(user))
+                .token(jwtUtils.generateToken(user))
                 .user(user)
                 .build();
     }
@@ -55,13 +57,14 @@ public class AuthenticationService {
             throw new InternalServerException(EventError.PHONE_IS_SIGN_UP.toString());
         }
 
-        var encodePassword = jwtUtil.encode(request.getPassword());
+        var encodePassword = jwtUtils.encode(request.getPassword());
         var user = new User(request);
 
         user.setPassword(encodePassword);
         userRepo.save(user);
 
-        return jwtUtil.getTokenAndStoreRedis(user);
+
+        return jwtUtils.getTokenAndStoreRedis(user);
     }
 
 

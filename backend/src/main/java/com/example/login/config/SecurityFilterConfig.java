@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityFilterConfig {
     private final AuthenticationProvider provider;
     private final JwtFilter jwtFilter;
-
     private final String[] AUTH_PERMISSION_LIST = {
             "/auth/**",
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
@@ -24,7 +23,7 @@ public class SecurityFilterConfig {
             "/test/**"
     };
 
-    public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter) {
+    public SecurityFilterConfig(AuthenticationProvider provider,JwtFilter jwtFilter) {
         this.provider = provider;
         this.jwtFilter = jwtFilter;
     }
@@ -40,12 +39,11 @@ public class SecurityFilterConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(provider)
-                //UsernamePasswordAuthenticationFilter：
-                // 用于处理基于表单的登录请求，从表单中获取用户名和密码。 默认情况下处理来自“/login”的请求。
+                //jwtFilter要在認證帳號密碼前載入
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login()
                 .and()
-                .cors().and().csrf().disable();
+                .cors().disable().csrf().disable();
 
         return http.build();
     }
