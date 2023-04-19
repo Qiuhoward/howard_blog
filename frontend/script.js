@@ -4,6 +4,7 @@ const loginLink = document.querySelector(".login-link");
 
 const btn_login = document.querySelector(".btn_login");
 const btn_register = document.querySelector(".btn_register");
+
 registerLink.addEventListener("click", () => {
   logBox.classList.add("active");
 });
@@ -26,12 +27,12 @@ btn_register.addEventListener("click", () => {
     },
     body: JSON.stringify({ email, password, name, mobile }),
   })
-    .then((response, data) => {
-      if (response.ok) {
-        //註冊完成一樣轉到首頁
-      } else {
-        console.log("fail");
-      }
+    .then(function (response) {
+      return response.json;
+    })
+    .then((data) => {
+      localStorage.setItem("token", data.token);
+      window.location.href = "http://localhost:5500/index.html";
     })
     .catch((error) => {
       console.log("fail");
@@ -56,8 +57,9 @@ btn_login.addEventListener("click", () => {
     })
     .then((data) => {
       console.log(data);
+      localStorage.setItem("token", data.token);
+      window.location.href = "http://localhost:5500/index.html";
       //如果對那就把資料存起來並導到首頁
-      return false;
     })
     .catch((error) => {
       console.log("fail2");

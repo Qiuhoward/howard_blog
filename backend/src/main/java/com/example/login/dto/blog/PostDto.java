@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 
 public class PostDto extends BasicDto {
-    private String postPeople;
+    private String author;
     private String content;
     private String title;
 

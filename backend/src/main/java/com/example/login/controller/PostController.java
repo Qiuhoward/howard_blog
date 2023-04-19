@@ -4,6 +4,8 @@ import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.service.PostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ public class PostController {
     }
 
     @PostMapping("/add")
-    public String addPost(@RequestBody PostDto postDto) {
-        return postService.addPost(postDto);
+    public ResponseEntity<Boolean> addPost(@RequestBody PostDto postDto) {
+        return ResponseEntity.ok().body(postService.addPost(postDto));
     }
 
     @PutMapping("/edit")
@@ -40,8 +42,8 @@ public class PostController {
     }
 
     @DeleteMapping("/delete")
-    public void Post( int postId,String name) {
-        postService.delete(postId,name);
+    public void Post(int postId, String name) {
+        postService.delete(postId, name);
     }
 
 }

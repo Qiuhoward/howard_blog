@@ -35,19 +35,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", request.getMethod());
-        response.setHeader("content-type","application/json");
-        response.setHeader(
-                "Access-Control-Allow-Headers", "authorization, content-type, xsrf-token, token");
-        log.info("進行過濾");
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userName;
         log.info("header:{}", authHeader);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return ;
+            return;
         }
         jwt = authHeader.substring(7);
         userName = jwtUtils.extraUserName(jwt);
