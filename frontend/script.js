@@ -32,7 +32,9 @@ btn_register.addEventListener("click", () => {
     })
     .then((data) => {
       localStorage.setItem("token", data.token);
-      window.location.href = "http://localhost:5500/index.html";
+      if (token != null) {
+        window.location.href = "http://localhost:5500/index.html";
+      }
     })
     .catch((error) => {
       console.log("fail");
@@ -58,7 +60,10 @@ btn_login.addEventListener("click", () => {
     .then((data) => {
       console.log(data);
       localStorage.setItem("token", data.token);
-      window.location.href = "http://localhost:5500/index.html";
+      if (token != null) {
+        window.location.href = "http://localhost:5500/index.html";
+      }
+
       //如果對那就把資料存起來並導到首頁
     })
     .catch((error) => {
