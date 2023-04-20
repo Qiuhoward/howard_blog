@@ -26,15 +26,8 @@ public class Post {
     private String postPeople;
     private String title;
     private Date createAt;
-
-
-
-//    public void addPost(PostDto request, PostRepo repo) {
-//       this.createAt=System.currentTimeMillis();
-//       this.postPeople= request.getPostPeople();
-//       this.title=request.getTitle();
-//      //傳給留言的add comment把留言存起來 =request.getId();
-//    }
+    private Integer userId;
+    private Integer categoryId;
 
     @Override
     public boolean equals(Object o) {

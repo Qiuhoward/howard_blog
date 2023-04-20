@@ -39,7 +39,6 @@ public class PostService implements BasicService {
                             .content(request.getContent())
                             .build();
                     postRepo.save(post);
-                    e.setPostId(post.getPostId());
                 });
         return status;
     }
