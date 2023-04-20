@@ -1,6 +1,8 @@
 package com.example.login.service;
 
 
+import com.example.login.exception.InternalServerException;
+
 import java.util.List;
 
 /**
@@ -8,6 +10,6 @@ import java.util.List;
  */
 public interface BasicService{
 
-    void delete(int id,String name);
+    void delete(int id,String name) throws InternalServerException;
     List<?> findAll();
 }

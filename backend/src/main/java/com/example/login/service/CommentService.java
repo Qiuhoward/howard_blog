@@ -3,12 +3,14 @@ package com.example.login.service;
 import com.example.login.dao.post.Comment;
 import com.example.login.dao.post.CommentRepo;
 import com.example.login.dto.blog.CommentDto;
+import com.example.login.exception.EventError;
+import com.example.login.exception.InternalServerException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CommentService {
+public class CommentService implements BasicService{
 
     private final CommentRepo commentRepo;
 
@@ -34,9 +36,10 @@ public class CommentService {
     public List<Comment> findAll(){
        return  commentRepo.findAll();
     }
-    public String deleteComment(int commentId,String name){
-        commentRepo.deleteCommentByCommentIdAndCommentPeople(commentId,name);
-        return "刪除成功";
+
+    public void delete(int commentId, String name) throws InternalServerException {
+        commentRepo.deleteCommentByCommentIdAndCommentPeople(commentId, name)
+                .orElseThrow(()->new InternalServerException(EventError.DATA_IS_NOT_EXIST.toString()));
     }
-    //尋找所有關於那篇文章得留言
+
 }
