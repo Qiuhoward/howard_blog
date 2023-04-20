@@ -3,11 +3,9 @@ package com.example.login.dao.post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 
 @Repository
 public interface CommentRepo extends JpaRepository<Comment,Integer> {
 
-   Optional<Comment>findByPostId(Integer postId);
+   void deleteCommentByCommentIdAndCommentPeople(Integer commentId, String commentPeople);
 }

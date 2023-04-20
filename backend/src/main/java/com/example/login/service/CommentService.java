@@ -5,6 +5,8 @@ import com.example.login.dao.post.CommentRepo;
 import com.example.login.dto.blog.CommentDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentService {
 
@@ -28,5 +30,13 @@ public class CommentService {
         return "新增成功";
     }
 
+
+    public List<Comment> findAll(){
+       return  commentRepo.findAll();
+    }
+    public String deleteComment(int commentId,String name){
+        commentRepo.deleteCommentByCommentIdAndCommentPeople(commentId,name);
+        return "刪除成功";
+    }
     //尋找所有關於那篇文章得留言
 }
