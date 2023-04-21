@@ -144,7 +144,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  width: 40%;
+  width: 42%;
   height: 100%;
   overflow: hidden;
 }
@@ -163,16 +163,17 @@ body {
   border-bottom-right-radius: 10px;
   color: aliceblue;
 }
+
 .log-box .form-box.login {
   transform: translateX(0);
   transition: transform 0.6s ease; /* 擦掉的特效 */
 }
 .log-box.active .form-box.login {
-  transform: translateX(430px);
+  transform: translateX(500px);
   transition-delay: 0.6s;
 }
 .log-box .form-box.register {
-  transform: translateX(430px);
+  transform: translateX(500px);
 }
 
 .log-box.active .form-box.register {
@@ -187,7 +188,7 @@ body {
 .form-box .input-box {
   position: relative;
   width: 340px;
-  height: 30px;
+  height: 50px;
   border-bottom: 2px solid aliceblue;
   margin: 30px 0;
 }
@@ -202,6 +203,7 @@ body {
   font-weight: 500;
   padding-right: 28px;
 }
+
 .input-box label {
   position: absolute;
   top: 60%;
@@ -221,7 +223,7 @@ body {
 .input-box .icon {
   position: absolute;
   font-size: 19px;
-  right: 10px;
+  right: 20px;
 }
 
 .remember-forget {

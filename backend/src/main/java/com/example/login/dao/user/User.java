@@ -29,7 +29,6 @@ public class User implements UserDetails {
     private Date createAt;
     private Date lastTime;
 
-    private Integer PostId ;
 
     @Enumerated(EnumType.STRING)
     private Provider provider;

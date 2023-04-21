@@ -1,10 +1,8 @@
 package com.example.login.dao.post;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.login.dao.user.User;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -26,16 +24,10 @@ public class Post {
     private String postPeople;
     private String title;
     private Date createAt;
+    private Integer categoryId;
 
-
-
-//    public void addPost(PostDto request, PostRepo repo) {
-//       this.createAt=System.currentTimeMillis();
-//       this.postPeople= request.getPostPeople();
-//       this.title=request.getTitle();
-//      //傳給留言的add comment把留言存起來 =request.getId();
-//    }
-
+    @ManyToOne
+    private User user;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
