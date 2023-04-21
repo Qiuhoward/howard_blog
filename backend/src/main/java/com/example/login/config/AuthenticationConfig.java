@@ -2,6 +2,7 @@ package com.example.login.config;
 
 import com.example.login.dao.user.UserRepo;
 import com.example.login.exception.EventError;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

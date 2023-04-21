@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface categoryRepo extends JpaRepository<Category,Integer> {
+public interface CategoryRepo extends JpaRepository<Category,Integer> {
 
 
 }

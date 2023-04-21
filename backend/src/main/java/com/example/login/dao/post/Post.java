@@ -1,10 +1,8 @@
 package com.example.login.dao.post;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.login.dao.user.User;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -26,9 +24,10 @@ public class Post {
     private String postPeople;
     private String title;
     private Date createAt;
-    private Integer userId;
     private Integer categoryId;
 
+    @ManyToOne
+    private User user;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

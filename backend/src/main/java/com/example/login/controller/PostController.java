@@ -4,7 +4,6 @@ import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.service.PostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,20 +29,23 @@ public class PostController {
     }
 
     @PutMapping("/edit")
-    public String editPost(String name, int postId, String content, String title) {
+    public ResponseEntity<String> editPost(String name, int postId, String content, String title) {
 
-        return postService.edit(name, postId, content, title);
+        return ResponseEntity.ok().body(postService.edit(name, postId, content, title));
     }
 
-    @GetMapping("/find_all")
-    public List<Post> findAll() {
+    @GetMapping("/")
+    public ResponseEntity<List<PostDto>> findAllPost() {
 
-        return postService.findAll();
+        return ResponseEntity.ok().body(postService.findAllPost());
     }
 
-    @DeleteMapping("/delete")
-    public void Post(int postId, String name) {
-        postService.delete(postId, name);
+    @DeleteMapping("/{postId}")
+    public void Post(@PathVariable Integer postId) {
+        postService.deletePost(postId);
     }
-
+    @GetMapping( "category/{categoryId}/posts")
+        public ResponseEntity<List<PostDto>> findAllByCategory(@PathVariable Integer categoryId){
+        return ResponseEntity.ok().body(postService.findAllByCategory(categoryId));
+    }
 }
