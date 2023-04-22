@@ -78,7 +78,7 @@ public class PostServiceImp implements PostService {
 
     public List<PostDto> findAllByCategory(int categoryId) {
         categoryRepo.findById(categoryId).orElseThrow(
-                ()->new ResourceNotFoundException(Category.class,"categoryId",categoryId));
+                () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
 
         return postRepo.findByCategoryId(categoryId)
                 .stream()

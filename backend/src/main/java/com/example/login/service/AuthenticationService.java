@@ -1,6 +1,5 @@
 package com.example.login.service;
 
-import com.example.login.exception.EventError;
 import com.example.login.exception.InternalServerException;
 import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
@@ -8,6 +7,8 @@ import com.example.login.dto.account.LoginRequest;
 import com.example.login.dto.account.LoginResponse;
 import com.example.login.dto.account.RegisterRequest;
 import com.example.login.dto.account.RegisterResponse;
+import com.example.login.exception.ResourceIsExistException;
+import com.example.login.exception.ResourceNotFoundException;
 import com.example.login.utils.BcryptUtils;
 import com.example.login.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
@@ -28,13 +29,13 @@ public class AuthenticationService {
 
         //use java8 optional checked null
       var user=  userRepo.findUserByUserName(request.getEmail()).orElseThrow(
-                () -> new InternalServerException(EventError.ACCOUNT_IS_NOT_EXIST.toString())
+                () -> new ResourceNotFoundException(User.class,"email",request.getEmail())
         );
 
         var result=bcryptUtils.checkPassword(request.getPassword(),user.getPassword());
 
         if(!result){
-            throw new InternalServerException(EventError.ACCOUNT_PASSWORD_ERROR.toString());
+            throw new InternalServerException("帳號密碼錯誤");
         }
         log.info("成功登入");
         user.setLastTime(new Date());
@@ -47,14 +48,14 @@ public class AuthenticationService {
                 .build();
     }
 
-    public RegisterResponse register(RegisterRequest request) throws InternalServerException {
+    public RegisterResponse register(RegisterRequest request) {
         log.info("進入註冊環節 -> 參數為{}", request);
 
         if (userRepo.findUserByUserName(request.getEmail()).isPresent()) {
-            throw new InternalServerException(EventError.ACCOUNT_IS_EXIST.toString());
+            throw new ResourceIsExistException(User.class,"email",request.getEmail());
         }
         if (!userRepo.findUserByMobile(request.getMobile()).isEmpty()) {
-            throw new InternalServerException(EventError.PHONE_IS_SIGN_UP.toString());
+            throw new ResourceIsExistException(User.class,"phone",request.getMobile());
         }
 
         var encodePassword = jwtUtils.encode(request.getPassword());

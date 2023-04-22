@@ -26,7 +26,7 @@ public class AuthController {
 
 
     @PostMapping(value = "/register" )
-    public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request) throws InternalServerException {
+    public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request){
         return new ResponseEntity<>(service.register(request), HttpStatus.CREATED);
     }
 
