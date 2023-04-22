@@ -45,7 +45,12 @@ public class PostController {
         postService.deletePost(postId);
     }
     @GetMapping( "category/{categoryId}/posts")
-        public ResponseEntity<List<PostDto>> findAllByCategory(@PathVariable Integer categoryId){
-        return ResponseEntity.ok().body(postService.findAllByCategory(categoryId));
+        public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId){
+        return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
+    }
+
+    @GetMapping( "user/{userId}/posts")
+    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable Integer userId){
+        return ResponseEntity.ok().body(postService.findPostByUser(userId));
     }
 }

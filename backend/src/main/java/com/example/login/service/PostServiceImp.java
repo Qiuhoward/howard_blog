@@ -4,6 +4,7 @@ import com.example.login.dao.post.Category;
 import com.example.login.dao.post.CategoryRepo;
 import com.example.login.dao.post.Post;
 import com.example.login.dao.post.PostRepo;
+import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.exception.ResourceNotFoundException;
@@ -76,7 +77,7 @@ public class PostServiceImp implements PostService {
     }
 
 
-    public List<PostDto> findAllByCategory(int categoryId) {
+    public List<PostDto> findPostByCategory(int categoryId) {
         categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
 
@@ -87,12 +88,15 @@ public class PostServiceImp implements PostService {
     }
 
 
-}
+    public List<PostDto> findPostByUser(Integer userId) {
+        userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException(User.class, "userId", userId));
 
-//    public List<Post> findAllPostByUser(User user) {
-//          var post=postRepo.findByUser(user).stream().map(THIS)
-//        .orElseThrow(()->
-//                new ResourceNotFoundException(user.getClass(),"userId", user.getUserId()));
-//              return
-//           }
+        return postRepo.findByUser(userId)
+                .stream()
+                .map((post) -> this.mapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+    }
+
+}
 
