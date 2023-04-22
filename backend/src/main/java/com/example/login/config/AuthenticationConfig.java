@@ -1,8 +1,8 @@
 package com.example.login.config;
 
+import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
-import com.example.login.exception.EventError;
-import org.modelmapper.ModelMapper;
+import com.example.login.exception.ResourceNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -28,7 +27,7 @@ public class AuthenticationConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> (UserDetails) repo.findUserByUserName(username).orElseThrow(
-                () -> new UsernameNotFoundException(EventError.ACCOUNT_IS_NOT_EXIST.toString()));
+                () -> new ResourceNotFoundException(User.class,"userName",username));
     }
 
     /**

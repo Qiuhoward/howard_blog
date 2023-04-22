@@ -1,15 +1,13 @@
 package com.example.login.dto.account;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Range;
+import lombok.*;
 
 /**
  * <註冊參數></註冊參數>
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor(staticName = "build")
 @NoArgsConstructor
 public class RegisterRequest {

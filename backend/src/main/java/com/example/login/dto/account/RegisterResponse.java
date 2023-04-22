@@ -4,6 +4,6 @@ import lombok.Builder;
 
 
 @Builder
-public record RegisterResponse (String status,String token){
+public record RegisterResponse(String status, String token) {
 
 }
