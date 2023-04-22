@@ -13,7 +13,7 @@
 ### Technology Stack
 | Component         | Technology                 |
 |-------------------|----------------------------|
-| Frontend          | React 18+                  |
+| Frontend          | bootstrap,jquery           |
 | Backend           | Spring Boot 3.0+, Java 19+ |
 | Security          | Spring Security,Oauth2,JWT |
 | Auth              | Local, Google,Github       |
