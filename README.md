@@ -13,11 +13,11 @@
 ### Technology Stack
 | Component         | Technology                 |
 |-------------------|----------------------------|
-| Frontend          | bootstrap,jquery ,js       |
+| Frontend          | Bootstrap,Jquery ,JS       |
 | Backend           | Spring Boot 3.0+, Java 19+ |
 | Security          | Spring Security,Oauth2,JWT |
 | Auth              | Local, Google,Github       |
-| Database          | mariaDB, Mysql             |
+| Database          | MariaDB, Redis             |
 | Persistence       | JPA                        |
 | API Documentation | Swagger-UI                 |
 | Client Build      | npm, yarn, webpack         |
