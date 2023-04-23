@@ -1,5 +1,4 @@
 spring:
-
   #MariaDB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
@@ -28,12 +27,12 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: { your google id}
+            client-secret: {your google secret  }
           github:
-            client-id:
-            client-secret:
-
-
+            client-id: {your github id }
+            client-secret: {your github secret}
+server:
+  port: 8080
 
 

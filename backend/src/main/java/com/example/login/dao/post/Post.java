@@ -24,10 +24,18 @@ public class Post {
     private String postPeople;
     private String title;
     private Date createAt;
-    private Integer categoryId;
+
+//    @ManyToOne
+//    @JoinColumn(name = "category_id")
+//    private Category category;
 
     @ManyToOne
     private User user;
+
+    //到時候可能可以刪掉
+    private Integer categoryId;
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
