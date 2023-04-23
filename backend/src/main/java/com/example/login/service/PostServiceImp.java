@@ -11,6 +11,9 @@ import com.example.login.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -65,8 +68,12 @@ public class PostServiceImp implements PostService {
     }
 
 
-    public List<PostDto> findAllPost() {
-        return postRepo.findAll()
+    public List<PostDto> findAllPost(Integer pageNumber,Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);//自訂義頁數跟大小
+        Page<Post> pagePost = postRepo.findAll(pageable);
+        List<Post> postList = pagePost.getContent();
+       //搭配Sort來對資料庫做分頁及排序查
+        return postList
                 .stream()
                 .map((post) -> this.mapper.map(post, PostDto.class))
                 .collect(Collectors.toList());

@@ -1,6 +1,7 @@
 package com.example.login.controller;
 
 import com.example.login.dto.blog.CommentDto;
+import com.example.login.dto.blog.PostDto;
 import com.example.login.exception.ApiResponse;
 import com.example.login.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -54,5 +55,6 @@ public class CommentController {
     public ResponseEntity<List<CommentDto>> findCommentsByPost(@PathVariable Integer postId) {
         return ResponseEntity.ok().body(commentService.findCommentByPost(postId));
     }
+
 
 }

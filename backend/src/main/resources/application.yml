@@ -27,11 +27,11 @@ spring:
       client:
         registration:
           google:
-            client-id: 60368141234-mn9eqk4hd2h6m8aps2kfp367pt6novdb.apps.googleusercontent.com
-            client-secret: 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
+            client-id: { your google id}
+            client-secret: {your google secret  }
           github:
-            client-id: ef1fd9d039915c402869
-            client-secret: 4c4fe8802f6c354a21d0b05aa88ba781b4699931
+            client-id: {your github id }
+            client-secret: {your github secret}
 server:
   port: 8080
 

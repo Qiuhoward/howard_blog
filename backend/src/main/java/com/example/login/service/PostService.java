@@ -17,7 +17,7 @@ public interface PostService {
 
     String edit(String name, int postId, String content, String title);
 
-    List<PostDto> findAllPost();
+    List<PostDto> findAllPost(Integer pageNumber,Integer pageSize);
 
     List<PostDto> findPostByCategory(int categoryId);
 

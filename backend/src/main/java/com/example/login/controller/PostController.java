@@ -40,9 +40,12 @@ public class PostController {
 
     @GetMapping("/")
     @Operation(summary = "搜尋所有文章")
-    public ResponseEntity<List<PostDto>> findAllPost() {
+    public ResponseEntity<List<PostDto>> findAllPost(
+            @RequestParam(value = "pageSize" ,defaultValue = "1" ,required = false)Integer pageSize,
+            @RequestParam(value = "pageNumber" ,defaultValue = "5" ,required = false)Integer pageNumber
+    ) {
 
-        return ResponseEntity.ok().body(postService.findAllPost());
+        return ResponseEntity.ok().body(postService.findAllPost(pageNumber,pageSize));
     }
 
     @DeleteMapping("/{postId}")

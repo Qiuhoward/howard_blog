@@ -14,4 +14,6 @@ public interface CommentRepo extends JpaRepository<Comment,Integer> {
    Optional<Comment> findByPostId(Integer postId);
 
    Optional<Comment> findCommentByCommentIdAndCommentPeople(int commentId, String name);
+
+
 }

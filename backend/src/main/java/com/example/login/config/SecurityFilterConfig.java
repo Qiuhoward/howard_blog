@@ -22,6 +22,9 @@ public class SecurityFilterConfig {
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
             "/swagger-ui/**",//訪問swagger地址
             "/test/**",
+            "/comment/**",
+            "/post/**"
+
     };
 
     public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter) {
@@ -51,25 +54,12 @@ public class SecurityFilterConfig {
                 .authenticationProvider(provider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .cors().configurationSource((option) -> config)// return config;
-//                .oauth2Login()
+//              .oauth2Login()
                 .and()
                 .csrf().disable();
 
         return http.build();
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(List.of("*")); // Set the allowed origins
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Set the allowed HTTP methods
-//        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Set the allowed headers
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration); // Apply the configuration to all endpoints
-//
-//        return source;
-//    }
 
 }
 
