@@ -27,25 +27,29 @@ public class PostController {
 
     @PostMapping("/add")
     @Operation(summary = "新增文章")
-    public ResponseEntity<Boolean> addPost(@RequestBody PostDto postDto) {
+    public ResponseEntity<String> addPost(@RequestBody PostDto postDto) {
         return ResponseEntity.ok().body(postService.addPost(postDto));
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/{postId}")
     @Operation(summary = "編輯文章")
-    public ResponseEntity<String> editPost(String name, int postId, String content, String title) {
+    public ResponseEntity<String> editPost(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "content") String content,
+            @RequestParam(value = "title") String title,
+            @PathVariable Integer postId) {
 
-        return new ResponseEntity<>(postService.edit(name, postId, content, title), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.editPost(name, postId, content, title), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     @Operation(summary = "搜尋所有文章")
     public ResponseEntity<List<PostDto>> findAllPost(
-            @RequestParam(value = "pageSize" ,defaultValue = "1" ,required = false)Integer pageSize,
-            @RequestParam(value = "pageNumber" ,defaultValue = "5" ,required = false)Integer pageNumber
+            @RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize,
+            @RequestParam(value = "pageNumber", defaultValue = "5", required = false) Integer pageNumber
     ) {
 
-        return ResponseEntity.ok().body(postService.findAllPost(pageNumber,pageSize));
+        return ResponseEntity.ok().body(postService.findAllPost(pageNumber, pageSize));
     }
 
     @DeleteMapping("/{postId}")

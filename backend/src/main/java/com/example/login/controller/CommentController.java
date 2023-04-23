@@ -35,11 +35,15 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.findAllComment());
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/{commentId}")
     @Operation(summary = "編輯留言")
-    public ResponseEntity<String>editPost(String name, int postId, String content, String title) {
+    public ResponseEntity<String> editPost(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "content") String content,
+            @RequestParam(value = "title") String title,
+            @PathVariable Integer commentId) {
 
-        return new ResponseEntity<>(commentService.editComment(name, postId, content, title), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.editComment(name, commentId, content, title), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{deleteId}")
@@ -51,7 +55,7 @@ public class CommentController {
 
 
     @GetMapping("post/{postId}/comments")
-    @Operation(summary = "刪除某篇文章留言")
+    @Operation(summary = "尋找某篇文章所有留言")
     public ResponseEntity<List<CommentDto>> findCommentsByPost(@PathVariable Integer postId) {
         return ResponseEntity.ok().body(commentService.findCommentByPost(postId));
     }

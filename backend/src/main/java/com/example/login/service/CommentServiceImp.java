@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class CommentServiceImp implements CommentService {
 
     private final CommentRepo commentRepo;
-
     private final PostRepo postRepo;
     private final ModelMapper mapper;
 

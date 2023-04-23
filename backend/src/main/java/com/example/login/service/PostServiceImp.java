@@ -32,22 +32,22 @@ public class PostServiceImp implements PostService {
     private final CategoryRepo categoryRepo;
 
 
-    public Boolean addPost(PostDto request) {
+    public String addPost(PostDto request) {
         log.info("name:{}", request.getAuthor());
-        boolean status = userRepo.findUserByName(request.getAuthor()).isPresent();
-        log.info("status:{}", status);
-        userRepo.findUserByName(request.getAuthor())
-                .ifPresent((e) -> {
-                    var post = Post.builder()
-                            .postPeople(request.getAuthor())
-                            .createAt(Date.from(Instant.now()))
-                            .title(request.getTitle())
-                            .content(request.getContent())
-                            .build();
-                    postRepo.save(post);
-                });
 
-        return status;
+        userRepo.findUserByName(request.getAuthor()).orElseThrow(
+                () -> new ResourceNotFoundException(Post.class, "author", request.getAuthor()));
+
+        var post = Post.builder()
+                .postPeople(request.getAuthor())
+                .createAt(Date.from(Instant.now()))
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
+
+        postRepo.save(post);
+
+        return "新增成功";
     }
 
 
@@ -57,7 +57,7 @@ public class PostServiceImp implements PostService {
     }
 
 
-    public String edit(String name, int postId, String content, String title) {
+    public String editPost(String name, int postId, String content, String title) {
         var post = postRepo.findPostByPostIdAndPostPeople(postId, name).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId)
         );
@@ -68,11 +68,11 @@ public class PostServiceImp implements PostService {
     }
 
 
-    public List<PostDto> findAllPost(Integer pageNumber,Integer pageSize) {
+    public List<PostDto> findAllPost(Integer pageNumber, Integer pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);//自訂義頁數跟大小
         Page<Post> pagePost = postRepo.findAll(pageable);
         List<Post> postList = pagePost.getContent();
-       //搭配Sort來對資料庫做分頁及排序查
+        //搭配Sort來對資料庫做分頁及排序查
         return postList
                 .stream()
                 .map((post) -> this.mapper.map(post, PostDto.class))

@@ -1,6 +1,9 @@
 package com.example.login.dto.blog;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 /**
  * 暫定post都用這個dto
