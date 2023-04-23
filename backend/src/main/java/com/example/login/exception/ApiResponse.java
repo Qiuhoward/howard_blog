@@ -4,6 +4,9 @@ package com.example.login.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <api錯誤回傳封包></api錯誤回傳封包>
+ */
 @Getter
 @Setter
 public class ApiResponse {

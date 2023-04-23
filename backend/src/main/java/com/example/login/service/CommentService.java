@@ -4,6 +4,9 @@ import com.example.login.dto.blog.CommentDto;
 
 import java.util.List;
 
+/**
+ * <文章留言服務></文章留言服務>
+ */
 public interface CommentService {
 
     String addComment(CommentDto commentDto);
@@ -15,4 +18,6 @@ public interface CommentService {
     void deleteComment(Integer commentId);
 
     List<CommentDto> findCommentByPost(Integer postId);
+
+    CommentDto findCommentByKeyword(String keyword);
 }

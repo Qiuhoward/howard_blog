@@ -59,4 +59,9 @@ public class CategoryServiceImp implements CategoryService {
     public void deleteCategory(Integer categoryId) {
         categoryRepo.deleteById(categoryId);
     }
+
+    @Override
+    public CategoryDto findCategoryByKeyword(String keyword) {
+        return null;
+    }
 }

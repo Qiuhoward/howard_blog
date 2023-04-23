@@ -1,7 +1,6 @@
 package com.example.login.controller;
 
 import com.example.login.dto.blog.CommentDto;
-import com.example.login.dto.blog.PostDto;
 import com.example.login.exception.ApiResponse;
 import com.example.login.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * <文章留言相關API></文章留言相關API>
+ */
 @RestController
 @Tag(name = "文章留言(Comment)")
 @RequestMapping(value = "comment")
@@ -35,6 +37,11 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.findAllComment());
     }
 
+    @GetMapping("/{keyword}")
+    @Operation(summary = "尋找關鍵字留言")
+    public ResponseEntity<CommentDto> findCommentByKeyword(@PathVariable String keyword) {
+        return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
+    }
     @PutMapping("/{commentId}")
     @Operation(summary = "編輯留言")
     public ResponseEntity<String> editPost(

@@ -75,5 +75,10 @@ public class CommentServiceImp implements CommentService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public CommentDto findCommentByKeyword(String keyword) {
+        return null;
+    }
+
 
 }

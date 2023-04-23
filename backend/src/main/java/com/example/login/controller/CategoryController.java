@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * <文章分類相關API></文章分類相關API>
+ */
 @RestController
 @Tag(name = "文章分類(Category)")
 @RequestMapping(value = "category")
@@ -32,6 +35,12 @@ public class CategoryController {
     @Operation(summary = "尋找所有分類")
     public ResponseEntity<List<CategoryDto>> findAllCategory() {
         return ResponseEntity.ok().body(categoryService.findAllCategory());
+    }
+
+    @GetMapping("/{keyword}")
+    @Operation(summary = "尋找關鍵字分類")
+    public ResponseEntity<CategoryDto> findCategoryByKeyword(@PathVariable String keyword) {
+        return ResponseEntity.ok().body(categoryService.findCategoryByKeyword(keyword));
     }
 
     @PutMapping("/{categoryId}")

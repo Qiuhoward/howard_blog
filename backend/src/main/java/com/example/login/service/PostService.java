@@ -5,7 +5,9 @@ import com.example.login.dto.blog.PostDto;
 
 import java.util.List;
 
-
+/**
+ * <文章服務></文章服務>
+ */
 public interface PostService {
 
     String addPost(PostDto request);

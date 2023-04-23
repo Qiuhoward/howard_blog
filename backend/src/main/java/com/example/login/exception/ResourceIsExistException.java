@@ -5,6 +5,9 @@ package com.example.login.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <資料已存在錯誤></資料已存在錯誤>
+ */
 @Getter
 @Setter
 public class ResourceIsExistException extends RuntimeException {

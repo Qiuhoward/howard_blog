@@ -4,6 +4,9 @@ package com.example.login.exception;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <資料不存在錯誤></資料不存在錯誤>
+ */
 @Getter
 @Setter
 public class ResourceNotFoundException extends RuntimeException {

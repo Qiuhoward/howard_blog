@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+
+/**
+ * <文章分類封包></文章分類封包>
+ */
 @Getter
 @Builder
 @AllArgsConstructor

@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * <hash>
+ * <雜湊 檢查 密碼>
  */
 
 @Component

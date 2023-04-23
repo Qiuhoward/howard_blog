@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * <文章窗口></文章窗口>
+ * <文章相關API></文章相關API>
  */
 
 @RestController
