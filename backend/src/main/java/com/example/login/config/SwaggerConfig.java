@@ -25,8 +25,8 @@ public class SwaggerConfig {
     public OpenAPI swaggerAPI() {
         return new OpenAPI().info(
                 new Info()
-                        .title("Swagger_API")
+                        .title("Howard_Blog_API")
                         .version("0.0.1")
-                        .description("spring_boot_API"));
+                        .description("This document is provide to frontend engineer to know What's API need??"));
     }
 }
