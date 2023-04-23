@@ -94,5 +94,10 @@ public class PostServiceImp implements PostService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<PostDto> findPostByKeyword(String keyword) {
+        return null;
+    }
+
 }
 

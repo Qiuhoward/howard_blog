@@ -1,9 +1,11 @@
 package com.example.login.dto.blog;
 
-import lombok.Data;
-import java.util.Date;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class BasicDto {
     private int id;
 
