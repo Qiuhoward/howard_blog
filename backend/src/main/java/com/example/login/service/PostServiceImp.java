@@ -8,6 +8,7 @@ import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.exception.ResourceNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,21 +19,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
+@RequiredArgsConstructor
 @Service
 public class PostServiceImp implements PostService {
 
     private final PostRepo postRepo;
     private final UserRepo userRepo;
     private final ModelMapper mapper;
-
     private final CategoryRepo categoryRepo;
-
-    public PostServiceImp(PostRepo postRepo, UserRepo userRepo, ModelMapper mapper, CategoryRepo categoryRepo) {
-        this.postRepo = postRepo;
-        this.userRepo = userRepo;
-        this.mapper = mapper;
-        this.categoryRepo = categoryRepo;
-    }
 
 
     public Boolean addPost(PostDto request) {
@@ -61,7 +55,9 @@ public class PostServiceImp implements PostService {
 
 
     public String edit(String name, int postId, String content, String title) {
-        var post = postRepo.findPostByPostIdAndPostPeople(postId, name).orElseThrow();
+        var post = postRepo.findPostByPostIdAndPostPeople(postId, name).orElseThrow(
+                () -> new ResourceNotFoundException(Post.class, "postId", postId)
+        );
         post.setContent(content);
         post.setTitle(title);
         postRepo.save(post);

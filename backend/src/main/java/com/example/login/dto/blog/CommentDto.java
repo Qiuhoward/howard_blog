@@ -1,11 +1,13 @@
 package com.example.login.dto.blog;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CommentDto {
-    private int postId;
+    private int commentId;
     private String comment;
     private String commentPeople;
 }

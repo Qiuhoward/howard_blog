@@ -1,44 +1,18 @@
 package com.example.login.service;
 
-import com.example.login.dao.post.Comment;
-import com.example.login.dao.post.CommentRepo;
 import com.example.login.dto.blog.CommentDto;
-import com.example.login.exception.ResourceNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class CommentService  {
+public interface CommentService {
 
-    private final CommentRepo commentRepo;
+    String addComment(CommentDto commentDto);
 
-    public CommentService(CommentRepo repo) {
-        this.commentRepo = repo;
-    }
+    List<CommentDto> findAllComment();
 
-    public String addComment(CommentDto commentDto) {
-        int postId = commentDto.getPostId();
-        String addComment = commentDto.getComment();
-        String commentPeople = commentDto.getCommentPeople();
-        var comment = Comment.builder()
-                .postId(postId)
-                .commentPeople(commentPeople)
-                .content(addComment)
-                .build();
-        commentRepo.save(comment);
+    String editComment(String name, int commentId, String content, String title);
 
-        return "新增成功";
-    }
+    void deleteComment(Integer commentId);
 
-
-    public List<Comment> findAll(){
-       return  commentRepo.findAll();
-    }
-
-    public void delete(int commentId, String name){
-        commentRepo.deleteCommentByCommentIdAndCommentPeople(commentId, name)
-                .orElseThrow(()->new ResourceNotFoundException(Comment.class,"commentId || comment-people",commentId));
-    }
-
+    List<CommentDto> findCommentByPost(Integer postId);
 }

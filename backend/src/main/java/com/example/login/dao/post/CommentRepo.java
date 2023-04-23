@@ -9,5 +9,9 @@ import java.util.Optional;
 @Repository
 public interface CommentRepo extends JpaRepository<Comment,Integer> {
 
-   Optional<Comment> deleteCommentByCommentIdAndCommentPeople(Integer commentId, String commentPeople);
+   Optional<Comment> deleteByCommentId(Integer commentId);
+
+   Optional<Comment> findByPostId(Integer postId);
+
+   Optional<Comment> findCommentByCommentIdAndCommentPeople(int commentId, String name);
 }

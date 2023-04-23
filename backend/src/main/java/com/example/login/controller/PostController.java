@@ -1,9 +1,9 @@
 package com.example.login.controller;
 
-import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.service.PostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class PostController {
     @PutMapping("/edit")
     public ResponseEntity<String> editPost(String name, int postId, String content, String title) {
 
-        return ResponseEntity.ok().body(postService.edit(name, postId, content, title));
+        return new ResponseEntity<>(postService.edit(name, postId, content, title), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -44,13 +44,14 @@ public class PostController {
     public void Post(@PathVariable Integer postId) {
         postService.deletePost(postId);
     }
-    @GetMapping( "category/{categoryId}/posts")
-        public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId){
+
+    @GetMapping("category/{categoryId}/posts")
+    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId) {
         return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
     }
 
-    @GetMapping( "user/{userId}/posts")
-    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable Integer userId){
+    @GetMapping("user/{userId}/posts")
+    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable Integer userId) {
         return ResponseEntity.ok().body(postService.findPostByUser(userId));
     }
 }

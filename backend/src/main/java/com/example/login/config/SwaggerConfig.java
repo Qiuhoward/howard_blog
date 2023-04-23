@@ -6,8 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 要有登入機制，讓管理員能夠登入到管理後台 (差前端頁面以及api token驗證)
- * 身為一個管理員，要能夠新增文章、編輯文章、刪除文章
+ * 要有登入機制，讓管理員能夠登入到管理後台
  * 新增文章時要有標題以及內文（串接 CKEditor）
  * 身為一個訪客，在首頁要能看到最新的五篇文章
  * 全文列表功能，能看到所有文章
