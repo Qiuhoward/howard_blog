@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,12 +50,16 @@ public class CategoryServiceImp implements CategoryService {
     @Override
     public void deleteCategory(Integer categoryId) {
         categoryRepo.findById(categoryId).orElseThrow(
-                ()->new ResourceNotFoundException(Category.class,"categoryId",categoryId));
+                () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
         categoryRepo.deleteById(categoryId);
     }
 
     @Override
-    public CategoryDto findCategoryByKeyword(String keyword) {
-        return null;
+    public List<CategoryDto> findCategoryByTitle(String keyword) {
+        Optional<Category> categoryOptional = categoryRepo.findByTitleContaining(keyword);
+        return categoryOptional
+                .stream().map((category -> this.mapper.map(category, CategoryDto.class)))
+                .toList();
+
     }
 }

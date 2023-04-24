@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -98,8 +99,12 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<PostDto> findPostByKeyword(String keyword) {
-        return null;
+    public List<PostDto> findPostByTitle(String keyword) {
+        Optional<Post> postOptional = postRepo.findByTitleContaining(keyword);
+
+        return postOptional
+                .stream()
+                .map((post) -> this.mapper.map(post, PostDto.class)).toList();
     }
 
 }

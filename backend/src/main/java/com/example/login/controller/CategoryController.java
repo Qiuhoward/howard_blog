@@ -25,9 +25,9 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/post/{postId}/category")
+    @PostMapping("/")
     @Operation(summary = "新增分類")
-    public ResponseEntity<String> addCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
         return new ResponseEntity<>(categoryService.addCategory(categoryDto), HttpStatus.CREATED);
     }
 
@@ -37,15 +37,15 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.findAllCategory());
     }
 
-    @GetMapping("/{keyword}")
-    @Operation(summary = "尋找關鍵字分類")
-    public ResponseEntity<CategoryDto> findCategoryByKeyword(@PathVariable String keyword) {
-        return ResponseEntity.ok().body(categoryService.findCategoryByKeyword(keyword));
+    @GetMapping("/search/{keyword}/category")
+    @Operation(summary = "關鍵字查詢分類")
+    public ResponseEntity<List<CategoryDto> > findCategoryByTitle(@PathVariable String keyword) {
+        return ResponseEntity.ok().body(categoryService.findCategoryByTitle(keyword));
     }
 
     @PutMapping("/{categoryId}")
     @Operation(summary = "編輯分類")
-    public ResponseEntity<String> editCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> editCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) {
 
         return new ResponseEntity<>(categoryService.editCategory(categoryId, categoryDto), HttpStatus.CREATED);
     }
@@ -56,6 +56,8 @@ public class CategoryController {
         categoryService.deleteCategory(deleteId);
         return new ResponseEntity<>(new ApiResponse("category is deleted", true), HttpStatus.OK);
     }
+
+
 
 
 }

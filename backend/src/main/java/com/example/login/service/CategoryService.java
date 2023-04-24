@@ -17,5 +17,5 @@ public interface CategoryService {
 
     void deleteCategory(Integer categoryId);
 
-    CategoryDto findCategoryByKeyword(String keyword);
+    List<CategoryDto>  findCategoryByTitle(String keyword);
 }
