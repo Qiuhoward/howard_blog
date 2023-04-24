@@ -17,9 +17,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
     private String content;
-    private String commentPeople;
     private Date createAt;
-    private Integer postId;
-    private Integer userId;
+
+    @ManyToOne
+    private Post post;
 
 }

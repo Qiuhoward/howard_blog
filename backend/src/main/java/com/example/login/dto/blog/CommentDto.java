@@ -13,5 +13,5 @@ import lombok.Setter;
 public class CommentDto {
     private int commentId;
     private String comment;
-    private String commentPeople;
+
 }

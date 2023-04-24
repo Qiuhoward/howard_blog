@@ -13,4 +13,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CategoryDto extends BasicDto {
     private String title;
+    private String description;
 }

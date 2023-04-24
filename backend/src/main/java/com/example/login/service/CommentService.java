@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface CommentService {
 
-    String addComment(CommentDto commentDto);
+    CommentDto addComment(CommentDto commentDto,Integer postId);
 
     List<CommentDto> findAllComment();
 
-    String editComment(String name, int commentId, String content, String title);
+    CommentDto editComment(String name, int commentId, String content, String title);
 
     void deleteComment(Integer commentId);
 

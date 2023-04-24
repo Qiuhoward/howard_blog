@@ -25,10 +25,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/post/{postId}/comment")
     @Operation(summary = "新增留言")
-    public ResponseEntity<String> addComment(@RequestBody CommentDto commentDto) {
-        return new ResponseEntity<>(commentService.addComment(commentDto), HttpStatus.CREATED);
+    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto, @PathVariable Integer postId) {
+        return new ResponseEntity<>(commentService.addComment(commentDto,postId), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -44,7 +44,7 @@ public class CommentController {
     }
     @PutMapping("/{commentId}")
     @Operation(summary = "編輯留言")
-    public ResponseEntity<String> editPost(
+    public ResponseEntity<CommentDto> editPost(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "content") String content,
             @RequestParam(value = "title") String title,

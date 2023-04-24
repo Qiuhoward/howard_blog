@@ -26,7 +26,6 @@ public class CategoryServiceImp implements CategoryService {
         String title = categoryDto.getTitle();
         categoryRepo.findByTitle(title).orElseThrow(
                 () -> new ResourceIsExistException(Category.class, "title", title));
-
         var category = Category
                 .builder()
                 .title(title)

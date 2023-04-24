@@ -33,24 +33,21 @@ public class PostServiceImp implements PostService {
     private final CategoryRepo categoryRepo;
 
 
-    public PostDto addPost(PostDto request, Integer categoryId, Integer userId) {
-        log.info("request:{}", request);
+    public PostDto addPost(PostDto postDto, Integer categoryId, Integer userId) {
+        log.info("request:{}", postDto);
 
-        userRepo.findById(userId).orElseThrow(
+        var user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(User.class, "userId", userId));
 
-        categoryRepo.findById(categoryId).orElseThrow(
+        var category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
+        Post post = this.mapper.map(postDto, Post.class);
 
-        var post = Post.builder()
-                .postPeople(request.getAuthor())
-                .createAt(Date.from(Instant.now()))
-                .title(request.getTitle())
-                .content(request.getContent())
-                .build();
+        post.setCategory(category);
+        post.setUser(user);
         postRepo.save(post);
 
-        return postToDto(post);
+        return this.mapper.map(post, PostDto.class);
     }
 
     public PostDto postToDto(Post post) {
@@ -73,6 +70,7 @@ public class PostServiceImp implements PostService {
         var post = postRepo.findPostByPostIdAndPostPeople(postId, name).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId)
         );
+
         post.setContent(content);
         post.setTitle(title);
         postRepo.save(post);

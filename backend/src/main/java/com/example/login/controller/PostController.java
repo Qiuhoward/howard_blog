@@ -28,7 +28,7 @@ public class PostController {
     @PostMapping("/user/{userId}/category/{categoryId}/post")
     @Operation(summary = "新增文章")
     public ResponseEntity<PostDto> addPost(@RequestBody PostDto postDto, @PathVariable Integer categoryId, @PathVariable Integer userId) {
-        return new ResponseEntity<>(postService.addPost(postDto,categoryId,userId),HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.addPost(postDto, categoryId, userId), HttpStatus.CREATED);
     }
 
 

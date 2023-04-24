@@ -5,6 +5,7 @@ import com.example.login.dao.post.CommentRepo;
 import com.example.login.dao.post.Post;
 import com.example.login.dao.post.PostRepo;
 import com.example.login.dto.blog.CommentDto;
+import com.example.login.exception.ResourceIsExistException;
 import com.example.login.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,18 +27,14 @@ public class CommentServiceImp implements CommentService {
         this.mapper = mapper;
     }
 
-    public String addComment(CommentDto commentDto) {
-        int postId = commentDto.getCommentId();
-        String addComment = commentDto.getComment();
-        String commentPeople = commentDto.getCommentPeople();
-        var comment = Comment.builder()
-                .postId(postId)
-                .commentPeople(commentPeople)
-                .content(addComment)
-                .build();
+    public CommentDto addComment(CommentDto commentDto, Integer postId) {
+        var post = postRepo.findById(postId).orElseThrow(
+                () -> new ResourceIsExistException(Post.class, "postId", postId));
+        Comment comment = this.mapper.map(commentDto, Comment.class);
+        comment.setPost(post);
         commentRepo.save(comment);
 
-        return "新增成功";
+        return mapper.map(comment, CommentDto.class);
     }
 
 
@@ -48,14 +45,8 @@ public class CommentServiceImp implements CommentService {
                 .collect(Collectors.toList());
     }
 
-    public String editComment(String name, int commentId, String content, String title) {
-        var comment = commentRepo.findCommentByCommentIdAndCommentPeople(commentId, name).orElseThrow(
-                () -> new ResourceNotFoundException(Comment.class, "commentId", commentId)
-        );
-        comment.setContent(content);
-        comment.setCreateAt(new Date());
-        commentRepo.save(comment);
-        return "修改成功";
+    public CommentDto editComment(String name, int commentId, String content, String title) {
+
     }
 
 
@@ -66,10 +57,10 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public List<CommentDto> findCommentByPost(Integer postId) {
-        postRepo.findById(postId).orElseThrow(
+        var post=postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId));
 
-        return commentRepo.findByPostId(postId)
+        return commentRepo.findByPost(post)
                 .stream()
                 .map((comment) -> this.mapper.map(comment, CommentDto.class))
                 .collect(Collectors.toList());

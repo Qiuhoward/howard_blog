@@ -1,8 +1,5 @@
 package com.example.login.dto.blog;
 
-
-import com.example.login.dao.post.Category;
-import com.example.login.dao.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

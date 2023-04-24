@@ -25,7 +25,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/post/{postId}/category")
     @Operation(summary = "新增分類")
     public ResponseEntity<String> addCategory(@RequestBody CategoryDto categoryDto) {
         return new ResponseEntity<>(categoryService.addCategory(categoryDto), HttpStatus.CREATED);
@@ -45,7 +45,7 @@ public class CategoryController {
 
     @PutMapping("/{categoryId}")
     @Operation(summary = "編輯分類")
-    public ResponseEntity<String> editCategory(@PathVariable Integer categoryId,@RequestParam(value = "title")String title) {
+    public ResponseEntity<String> editCategory(@PathVariable Integer categoryId, @RequestParam(value = "title") String title) {
 
         return new ResponseEntity<>(categoryService.editCategory(categoryId, title), HttpStatus.CREATED);
     }

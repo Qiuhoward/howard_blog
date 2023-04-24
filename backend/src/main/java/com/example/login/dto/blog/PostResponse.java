@@ -2,7 +2,6 @@ package com.example.login.dto.blog;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 
 /**
