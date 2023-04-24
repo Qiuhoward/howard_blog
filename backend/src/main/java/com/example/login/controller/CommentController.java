@@ -37,9 +37,9 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.findAllComment());
     }
 
-    @GetMapping("/{keyword}")
+    @GetMapping("/keyword/comments")
     @Operation(summary = "尋找關鍵字留言")
-    public ResponseEntity<CommentDto> findCommentByKeyword(@PathVariable String keyword) {
+    public ResponseEntity<CommentDto> findCommentByKeyword(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
     }
 
@@ -49,14 +49,14 @@ public class CommentController {
             @RequestParam(value = "content") String content,
             @PathVariable Integer commentId) {
 
-        return new ResponseEntity<>(commentService.editComment(commentId, content), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.editComment(commentId, content), HttpStatus.OK);
     }
 
     @DeleteMapping("/{deleteId}")
     @Operation(summary = "刪除留言")
     public ResponseEntity<ApiResponse> deleteComment(@PathVariable Integer deleteId) {
         commentService.deleteComment(deleteId);
-        return new ResponseEntity<>(new ApiResponse("comment is deleted", true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse("comment"+deleteId+" is deleted", true), HttpStatus.OK);
     }
 
 

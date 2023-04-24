@@ -9,6 +9,8 @@ import com.example.login.exception.ResourceIsExistException;
 import com.example.login.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,9 +32,11 @@ public class CommentServiceImp implements CommentService {
                 () -> new ResourceIsExistException(Post.class, "postId", postId));
         var comment = this.mapper.map(commentDto, Comment.class);
         comment.setPost(post);
+        comment.setCreateAt(new Date());
         commentRepo.save(comment);
-
-        return mapper.map(comment, CommentDto.class);
+        System.out.println(comment.getContent());
+        System.out.println(commentDto.getContent());
+        return mapper.map(comment,CommentDto.class);
     }
 
 
@@ -47,14 +51,15 @@ public class CommentServiceImp implements CommentService {
         var comment = commentRepo.findById(commentId).orElseThrow(
                 () -> new ResourceNotFoundException(Comment.class, "commentId", commentId));
         comment.setContent(content);
-        commentRepo.save(comment);
+        comment=commentRepo.save(comment);
         return this.mapper.map(comment, CommentDto.class);
     }
 
 
     public void deleteComment(Integer commentId) {
-        commentRepo.deleteByCommentId(commentId)
-                .orElseThrow(() -> new ResourceNotFoundException(Comment.class, "commentId || comment-people", commentId));
+        var comment=commentRepo.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException(Comment.class, "commentId", commentId));
+        commentRepo.delete(comment);
     }
 
     @Override
@@ -62,7 +67,7 @@ public class CommentServiceImp implements CommentService {
         var post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId));
 
-        return commentRepo.findByPost(post)
+        return commentRepo.findCommentByPost(post)
                 .stream()
                 .map((comment) -> this.mapper.map(comment, CommentDto.class))
                 .collect(Collectors.toList());

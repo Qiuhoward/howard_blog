@@ -41,8 +41,15 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(ResourceIsExistException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ApiResponse resourceNotFoundException(ResourceNotFoundException ex) {
+        String message = ex.getMessage();
+        return new ApiResponse(message, false);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ResourceIsExistException.class)
+    public ApiResponse resourceIsExistException(ResourceIsExistException ex) {
         String message = ex.getMessage();
         return new ApiResponse(message, false);
     }
@@ -52,4 +59,7 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
         return new ApiResponse(message, false);
     }
+
+
+
 }

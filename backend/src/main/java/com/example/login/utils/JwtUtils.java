@@ -108,8 +108,7 @@ public class JwtUtils {
     }
 
     /**
-     *
-     *加密為密文
+     * 加密為密文
      */
     public String encode(String password) {
         return passwordEncoder.encode(password);
