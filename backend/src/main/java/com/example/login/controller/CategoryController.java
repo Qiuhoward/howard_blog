@@ -37,9 +37,9 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.findAllCategory());
     }
 
-    @GetMapping("/search/{keyword}/category")
+    @GetMapping("/keyword/categorys")
     @Operation(summary = "關鍵字查詢分類")
-    public ResponseEntity<List<CategoryDto> > findCategoryByTitle(@PathVariable String keyword) {
+    public ResponseEntity<List<CategoryDto> > findCategoryByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(categoryService.findCategoryByTitle(keyword));
     }
 
@@ -47,14 +47,14 @@ public class CategoryController {
     @Operation(summary = "編輯分類")
     public ResponseEntity<CategoryDto> editCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) {
 
-        return new ResponseEntity<>(categoryService.editCategory(categoryId, categoryDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryService.editCategory(categoryId, categoryDto),HttpStatus.OK);
     }
 
     @DeleteMapping("/{deleteId}")
     @Operation(summary = "刪除分類")
     public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer deleteId) {
         categoryService.deleteCategory(deleteId);
-        return new ResponseEntity<>(new ApiResponse("category is deleted", true), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse("category"+deleteId+" is deleted", true), HttpStatus.OK);
     }
 
 

@@ -2,6 +2,7 @@ package com.example.login.dto.blog;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -10,8 +11,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class CommentDto {
     private int commentId;
-    private String comment;
+    private String content;
 
 }

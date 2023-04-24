@@ -1,6 +1,9 @@
 package com.example.login.controller;
 
+import com.example.login.dto.CustomConstant;
 import com.example.login.dto.blog.PostDto;
+import com.example.login.dto.blog.PostResponse;
+import com.example.login.exception.ApiResponse;
 import com.example.login.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,33 +38,35 @@ public class PostController {
     @PutMapping("/{postId}")
     @Operation(summary = "編輯文章")
     public ResponseEntity<PostDto> editPost(
-            @RequestParam(value = "name") String name,
             @RequestParam(value = "content") String content,
             @RequestParam(value = "title") String title,
             @PathVariable Integer postId) {
 
-        return new ResponseEntity<>(postService.editPost(name, postId, content, title), HttpStatus.CREATED);
+        return new ResponseEntity<>(postService.editPost(postId, content, title), HttpStatus.OK);
     }
 
     @GetMapping("/")
     @Operation(summary = "搜尋所有文章")
-    public ResponseEntity<List<PostDto>> findAllPost(
-            @RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize,
-            @RequestParam(value = "pageNumber", defaultValue = "5", required = false) Integer pageNumber
+    public ResponseEntity<PostResponse> findAllPost(
+            @RequestParam(value = "pageSize", defaultValue = CustomConstant.PAGE_SIZE, required = false) Integer pageSize,
+            @RequestParam(value = "pageNumber", defaultValue = CustomConstant.PAGE_NUMBER, required = false) Integer pageNumber,
+            @RequestParam(value = "sortBy", defaultValue = CustomConstant.SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = CustomConstant.SORT_DIC, required = false) String sortDir
     ) {
 
-        return ResponseEntity.ok().body(postService.findAllPost(pageNumber, pageSize));
+        return ResponseEntity.ok().body(postService.findAllPost(pageNumber, pageSize, sortBy, sortDir));
     }
 
     @DeleteMapping("/{postId}")
     @Operation(summary = "刪除文章")
-    public void deletePost(@PathVariable Integer postId) {
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId) {
         postService.deletePost(postId);
+        return ResponseEntity.ok().body(new ApiResponse("deleted", true));
     }
 
     @GetMapping("category/{categoryId}/posts")
     @Operation(summary = "搜尋特定類別文章")
-    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable int categoryId) {
+    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId) {
         return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
     }
 
@@ -71,8 +76,8 @@ public class PostController {
         return ResponseEntity.ok().body(postService.findPostByUser(userId));
     }
 
-    @GetMapping("/keyword")
-    @Operation(summary = "搜尋關鍵字文章")
+    @GetMapping("/keyword/posts")
+    @Operation(summary = "關鍵字搜尋文章")
     public ResponseEntity<List<PostDto>> findPostByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(postService.findPostByTitle(keyword));
     }

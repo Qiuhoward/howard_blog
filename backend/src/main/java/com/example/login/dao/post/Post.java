@@ -20,7 +20,6 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
     private String content;
-    private String postPeople;
     private String title;
     private Date createAt;
 

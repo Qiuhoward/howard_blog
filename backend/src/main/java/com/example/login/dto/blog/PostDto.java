@@ -1,9 +1,6 @@
 package com.example.login.dto.blog;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-
+import lombok.*;
 
 
 /**
@@ -11,17 +8,17 @@ import lombok.Getter;
  */
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
-public class PostDto extends BasicDto {
-    private String author;
+@NoArgsConstructor
+public class PostDto  {
+    private Integer postId;
     private String content;
     private String title;
     private CategoryDto category;
 //    private UserDto user;
 
-    public PostDto() {
-        super();
-    }
+
 
 }

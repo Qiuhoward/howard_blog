@@ -1,17 +1,16 @@
 package com.example.login.dto.blog;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 
 /**
  * <文章分類封包></文章分類封包>
  */
 @Getter
-@Builder
+@Setter
 @AllArgsConstructor
-public class CategoryDto extends BasicDto {
+@NoArgsConstructor
+public class CategoryDto  {
     private Integer categoryId;
     private String title;
     private String description;

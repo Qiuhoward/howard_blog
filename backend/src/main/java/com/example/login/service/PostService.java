@@ -2,6 +2,7 @@ package com.example.login.service;
 
 
 import com.example.login.dto.blog.PostDto;
+import com.example.login.dto.blog.PostResponse;
 
 import java.util.List;
 
@@ -12,17 +13,17 @@ public interface PostService {
 
     PostDto addPost(PostDto request,Integer categoryId, Integer userId);
 
-    void deletePost(int postId);
+    void deletePost(Integer postId);
 
-    PostDto editPost(String name, Integer postId, String content, String title);
+    PostDto editPost( Integer postId, String content, String title);
 
 
     /**
      * pagination
      */
-    List<PostDto> findAllPost(Integer pageNumber, Integer pageSize);
+    PostResponse findAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDic);
 
-    List<PostDto> findPostByCategory(int categoryId);
+    List<PostDto> findPostByCategory(Integer categoryId);
 
     List<PostDto> findPostByUser(int userId);
 

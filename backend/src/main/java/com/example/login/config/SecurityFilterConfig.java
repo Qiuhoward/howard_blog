@@ -24,10 +24,9 @@ public class SecurityFilterConfig {
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
             "/swagger-ui/**",//訪問swagger地址
             "/test/**",
-//            "/comment/**",
-//            "/post/**",
-//            "/comment/**",
-//            "/category/**"
+            "/comment/**",
+            "/post/**",
+            "/category/**"
 
     };
 
