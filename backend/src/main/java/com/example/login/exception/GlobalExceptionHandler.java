@@ -1,7 +1,7 @@
 package com.example.login.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -46,5 +46,10 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
         return new ApiResponse(message, false);
     }
-
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler( ExpiredJwtException.class)
+    public ApiResponse ExpiredJwtException(ExpiredJwtException ex) {
+        String message = ex.getMessage();
+        return new ApiResponse(message, false);
+    }
 }

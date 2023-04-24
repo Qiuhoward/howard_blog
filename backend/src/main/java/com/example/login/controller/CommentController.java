@@ -1,7 +1,6 @@
 package com.example.login.controller;
 
 import com.example.login.dto.blog.CommentDto;
-import com.example.login.dto.blog.PostDto;
 import com.example.login.exception.ApiResponse;
 import com.example.login.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * <文章留言相關API></文章留言相關API>
+ */
 @RestController
 @Tag(name = "文章留言(Comment)")
 @RequestMapping(value = "comment")
@@ -23,10 +25,10 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/post/{postId}/comment")
     @Operation(summary = "新增留言")
-    public ResponseEntity<String> addComment(@RequestBody CommentDto commentDto) {
-        return new ResponseEntity<>(commentService.addComment(commentDto), HttpStatus.CREATED);
+    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto, @PathVariable Integer postId) {
+        return new ResponseEntity<>(commentService.addComment(commentDto, postId), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -35,11 +37,19 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.findAllComment());
     }
 
-    @PutMapping("/edit")
-    @Operation(summary = "編輯留言")
-    public ResponseEntity<String>editPost(String name, int postId, String content, String title) {
+    @GetMapping("/{keyword}")
+    @Operation(summary = "尋找關鍵字留言")
+    public ResponseEntity<CommentDto> findCommentByKeyword(@PathVariable String keyword) {
+        return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
+    }
 
-        return new ResponseEntity<>(commentService.editComment(name, postId, content, title), HttpStatus.CREATED);
+    @PutMapping("/{commentId}")
+    @Operation(summary = "編輯留言")
+    public ResponseEntity<CommentDto> editComment(
+            @RequestParam(value = "content") String content,
+            @PathVariable Integer commentId) {
+
+        return new ResponseEntity<>(commentService.editComment(commentId, content), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{deleteId}")
@@ -51,7 +61,7 @@ public class CommentController {
 
 
     @GetMapping("post/{postId}/comments")
-    @Operation(summary = "刪除某篇文章留言")
+    @Operation(summary = "尋找某篇文章所有留言")
     public ResponseEntity<List<CommentDto>> findCommentsByPost(@PathVariable Integer postId) {
         return ResponseEntity.ok().body(commentService.findCommentByPost(postId));
     }

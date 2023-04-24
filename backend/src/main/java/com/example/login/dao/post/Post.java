@@ -5,13 +5,12 @@ import com.example.login.dao.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
-
 import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @Builder
 @Entity
@@ -25,15 +24,16 @@ public class Post {
     private String title;
     private Date createAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "category_id")
-//    private Category category;
-
     @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
-    //到時候可能可以刪掉
-    private Integer categoryId;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private Set<Comment> comment;
 
 
     @Override

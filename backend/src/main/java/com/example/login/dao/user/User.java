@@ -1,5 +1,6 @@
 package com.example.login.dao.user;
 
+import com.example.login.dao.post.Post;
 import com.example.login.dto.account.RegisterRequest;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,26 +9,24 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
 @Setter
-@ToString
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String name;
-
     private String userName;
     private String password;
     private String mobile;
     private Date createAt;
     private Date lastTime;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Post> posts=new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
@@ -36,7 +35,7 @@ public class User implements UserDetails {
 
     public User(RegisterRequest request) {
         this.password=request.getPassword();
-        this.userName=request.getEmail();
+        this.userName=request.getUserName();
         this.mobile=request.getMobile();
         this.createAt=new Date();
         this.lastTime=new Date();

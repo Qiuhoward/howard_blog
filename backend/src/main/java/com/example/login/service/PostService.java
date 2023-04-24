@@ -1,28 +1,30 @@
 package com.example.login.service;
 
 
-import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
+/**
+ * <文章服務></文章服務>
+ */
 public interface PostService {
 
-    Boolean addPost(PostDto request);
+    PostDto addPost(PostDto request,Integer categoryId, Integer userId);
 
     void deletePost(int postId);
 
-    String edit(String name, int postId, String content, String title);
+    PostDto editPost(String name, Integer postId, String content, String title);
 
-    List<PostDto> findAllPost(Integer pageNumber,Integer pageSize);
+
+    /**
+     * pagination
+     */
+    List<PostDto> findAllPost(Integer pageNumber, Integer pageSize);
 
     List<PostDto> findPostByCategory(int categoryId);
 
-
-    List<PostDto> findPostByUser(Integer userId);
+    List<PostDto> findPostByUser(int userId);
 
     List<PostDto> findPostByKeyword(String keyword);
 }

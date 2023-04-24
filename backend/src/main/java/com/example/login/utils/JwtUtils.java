@@ -17,6 +17,9 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+/**
+ * <JWT 工具包></JWT>
+ */
 @Component
 public class JwtUtils {
 
@@ -104,7 +107,10 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
+    /**
+     *
+     *加密為密文
+     */
     public String encode(String password) {
         return passwordEncoder.encode(password);
     }

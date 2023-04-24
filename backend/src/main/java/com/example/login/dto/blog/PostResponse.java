@@ -1,12 +1,12 @@
 package com.example.login.dto.blog;
 
-import jakarta.persistence.GeneratedValue;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 
-
+/**
+ * <分頁 排序></分頁 排序>
+ */
 @Getter
 @Setter
 public class PostResponse {

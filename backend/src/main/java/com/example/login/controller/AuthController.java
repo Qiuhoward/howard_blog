@@ -35,6 +35,7 @@ public class AuthController {
     @PostMapping(value = "/login")
     @Operation(summary = "登入")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) throws InternalServerException {
+        System.out.println(request);
         return ResponseEntity.ok(service.login(request));
     }
 

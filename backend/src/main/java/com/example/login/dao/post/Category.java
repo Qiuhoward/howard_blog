@@ -1,10 +1,10 @@
 package com.example.login.dao.post;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <文章分類></文章分類>
@@ -22,5 +22,9 @@ public class Category{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
     private String title;
+    private String description;
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Post> postList=new ArrayList<>();
 
 }

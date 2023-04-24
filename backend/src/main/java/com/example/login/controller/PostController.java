@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * <文章窗口></文章窗口>
+ * <文章相關API></文章相關API>
  */
 
 @RestController
@@ -25,27 +25,32 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/user/{userId}/category/{categoryId}/post")
     @Operation(summary = "新增文章")
-    public ResponseEntity<Boolean> addPost(@RequestBody PostDto postDto) {
-        return ResponseEntity.ok().body(postService.addPost(postDto));
+    public ResponseEntity<PostDto> addPost(@RequestBody PostDto postDto, @PathVariable Integer categoryId, @PathVariable Integer userId) {
+        return new ResponseEntity<>(postService.addPost(postDto, categoryId, userId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/edit")
-    @Operation(summary = "編輯文章")
-    public ResponseEntity<String> editPost(String name, int postId, String content, String title) {
 
-        return new ResponseEntity<>(postService.edit(name, postId, content, title), HttpStatus.CREATED);
+    @PutMapping("/{postId}")
+    @Operation(summary = "編輯文章")
+    public ResponseEntity<PostDto> editPost(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "content") String content,
+            @RequestParam(value = "title") String title,
+            @PathVariable Integer postId) {
+
+        return new ResponseEntity<>(postService.editPost(name, postId, content, title), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     @Operation(summary = "搜尋所有文章")
     public ResponseEntity<List<PostDto>> findAllPost(
-            @RequestParam(value = "pageSize" ,defaultValue = "1" ,required = false)Integer pageSize,
-            @RequestParam(value = "pageNumber" ,defaultValue = "5" ,required = false)Integer pageNumber
+            @RequestParam(value = "pageSize", defaultValue = "1", required = false) Integer pageSize,
+            @RequestParam(value = "pageNumber", defaultValue = "5", required = false) Integer pageNumber
     ) {
 
-        return ResponseEntity.ok().body(postService.findAllPost(pageNumber,pageSize));
+        return ResponseEntity.ok().body(postService.findAllPost(pageNumber, pageSize));
     }
 
     @DeleteMapping("/{postId}")
@@ -56,13 +61,13 @@ public class PostController {
 
     @GetMapping("category/{categoryId}/posts")
     @Operation(summary = "搜尋特定類別文章")
-    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId) {
+    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable int categoryId) {
         return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
     }
 
     @GetMapping("user/{userId}/posts")
     @Operation(summary = "搜尋特定使用者文章")
-    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable Integer userId) {
+    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable int userId) {
         return ResponseEntity.ok().body(postService.findPostByUser(userId));
     }
 

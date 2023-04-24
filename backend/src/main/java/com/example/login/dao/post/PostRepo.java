@@ -12,7 +12,7 @@ public interface PostRepo extends JpaRepository<Post,Integer> {
     Optional<Post> deletePostByPostId(Integer postId);
     Optional<Post>findPostByPostIdAndPostPeople(Integer postId, String name);
 
-    Optional<Post> findByUser(Integer userId);
+    Optional<Post> findByUser(User user);
 
-    Optional<Post>findByCategoryId(Integer categoryId);
+        Optional<Post>findByCategory(Category category);
 }
