@@ -13,7 +13,7 @@ import lombok.*;
 public class RegisterRequest {
 
     @Email(message = "account isn't be email format  ex:  ....@gmail.com")
-    private String email;
+    private String userName;
 
     @Size(min = 8, max = 14,message = "min:8 ,max:14")
     private String password;

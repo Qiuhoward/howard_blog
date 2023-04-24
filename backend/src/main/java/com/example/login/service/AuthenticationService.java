@@ -14,6 +14,7 @@ import com.example.login.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.util.Date;
 
 /**
@@ -31,13 +32,13 @@ public class AuthenticationService {
         log.info("進入登入 -> 參數為{}", request);
 
         //use java8 optional checked null
-      var user=  userRepo.findUserByUserName(request.getEmail()).orElseThrow(
-                () -> new ResourceNotFoundException(User.class,"email",request.getEmail())
+        var user = userRepo.findUserByUserName(request.getUserName()).orElseThrow(
+                () -> new ResourceNotFoundException(User.class, "userName", request.getUserName())
         );
 
-        var result=bcryptUtils.checkPassword(request.getPassword(),user.getPassword());
+        var result = bcryptUtils.checkPassword(request.getPassword(), user.getPassword());
 
-        if(!result){
+        if (!result) {
             throw new InternalServerException("帳號密碼錯誤");
         }
         log.info("成功登入");
@@ -54,11 +55,11 @@ public class AuthenticationService {
     public RegisterResponse register(RegisterRequest request) {
         log.info("進入註冊環節 -> 參數為{}", request);
 
-        if (userRepo.findUserByUserName(request.getEmail()).isPresent()) {
-            throw new ResourceIsExistException(User.class,"email",request.getEmail());
+        if (userRepo.findUserByUserName(request.getUserName()).isPresent()) {
+            throw new ResourceIsExistException(User.class, "userName", request.getUserName());
         }
         if (!userRepo.findUserByMobile(request.getMobile()).isEmpty()) {
-            throw new ResourceIsExistException(User.class,"phone",request.getMobile());
+            throw new ResourceIsExistException(User.class, "phone", request.getMobile());
         }
 
         var encodePassword = jwtUtils.encode(request.getPassword());

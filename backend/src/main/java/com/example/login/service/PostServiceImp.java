@@ -7,6 +7,7 @@ import com.example.login.dao.post.PostRepo;
 import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
 import com.example.login.dto.blog.PostDto;
+import com.example.login.exception.ApiResponse;
 import com.example.login.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -32,11 +33,14 @@ public class PostServiceImp implements PostService {
     private final CategoryRepo categoryRepo;
 
 
-    public String addPost(PostDto request) {
-        log.info("name:{}", request.getAuthor());
+    public PostDto addPost(PostDto request, Integer categoryId, Integer userId) {
+        log.info("request:{}", request);
 
-        userRepo.findUserByName(request.getAuthor()).orElseThrow(
-                () -> new ResourceNotFoundException(Post.class, "author", request.getAuthor()));
+        userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException(User.class, "userId", userId));
+
+        categoryRepo.findById(categoryId).orElseThrow(
+                () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
 
         var post = Post.builder()
                 .postPeople(request.getAuthor())
@@ -44,10 +48,18 @@ public class PostServiceImp implements PostService {
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
-
         postRepo.save(post);
 
-        return "新增成功";
+        return postToDto(post);
+    }
+
+    public PostDto postToDto(Post post) {
+
+        return PostDto.builder()
+                .author(post.getPostPeople())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
     }
 
 
@@ -81,21 +93,21 @@ public class PostServiceImp implements PostService {
 
 
     public List<PostDto> findPostByCategory(int categoryId) {
-        categoryRepo.findById(categoryId).orElseThrow(
+        var category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
 
-        return postRepo.findByCategoryId(categoryId)
+        return postRepo.findByCategory(category)
                 .stream()
                 .map((post) -> this.mapper.map(post, PostDto.class))
                 .collect(Collectors.toList());
     }
 
-
-    public List<PostDto> findPostByUser(Integer userId) {
-        userRepo.findById(userId).orElseThrow(
+    @Override
+    public List<PostDto> findPostByUser(int userId) {
+        var user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(User.class, "userId", userId));
 
-        return postRepo.findByUser(userId)
+        return postRepo.findByUser(user)
                 .stream()
                 .map((post) -> this.mapper.map(post, PostDto.class))
                 .collect(Collectors.toList());

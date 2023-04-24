@@ -25,11 +25,12 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/user/{userId}/category/{categoryId}/post")
     @Operation(summary = "新增文章")
-    public ResponseEntity<String> addPost(@RequestBody PostDto postDto) {
-        return ResponseEntity.ok().body(postService.addPost(postDto));
+    public ResponseEntity<PostDto> addPost(@RequestBody PostDto postDto, @PathVariable Integer categoryId, @PathVariable Integer userId) {
+        return new ResponseEntity<>(postService.addPost(postDto,categoryId,userId),HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{postId}")
     @Operation(summary = "編輯文章")
@@ -60,13 +61,13 @@ public class PostController {
 
     @GetMapping("category/{categoryId}/posts")
     @Operation(summary = "搜尋特定類別文章")
-    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId) {
+    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable int categoryId) {
         return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
     }
 
     @GetMapping("user/{userId}/posts")
     @Operation(summary = "搜尋特定使用者文章")
-    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable Integer userId) {
+    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable int userId) {
         return ResponseEntity.ok().body(postService.findPostByUser(userId));
     }
 

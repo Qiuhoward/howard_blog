@@ -24,8 +24,10 @@ public class SecurityFilterConfig {
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
             "/swagger-ui/**",//訪問swagger地址
             "/test/**",
-            "/comment/**",
-            "/post/**"
+//            "/comment/**",
+//            "/post/**",
+//            "/comment/**",
+//            "/category/**"
 
     };
 
@@ -41,6 +43,7 @@ public class SecurityFilterConfig {
         config.addAllowedHeader("Authorization");
         config.addAllowedHeader("Content-Type");
         config.addAllowedMethod("GET");
+        config.addAllowedMethod("PUT");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("OPTIONS");
@@ -55,6 +58,7 @@ public class SecurityFilterConfig {
                 .and()
                 .authenticationProvider(provider)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors().disable()
                 .cors().configurationSource((option) -> config)// return config;
 //              .oauth2Login()
                 .and()
