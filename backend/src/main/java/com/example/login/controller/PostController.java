@@ -73,7 +73,7 @@ public class PostController {
 
     @GetMapping("/keyword")
     @Operation(summary = "搜尋關鍵字文章")
-    public ResponseEntity<List<PostDto>> findPostByKeyword(@RequestParam(value = "keyword") String keyword) {
-        return ResponseEntity.ok().body(postService.findPostByKeyword(keyword));
+    public ResponseEntity<List<PostDto>> findPostByTitle(@RequestParam(value = "keyword") String keyword) {
+        return ResponseEntity.ok().body(postService.findPostByTitle(keyword));
     }
 }
