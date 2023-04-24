@@ -45,9 +45,9 @@ public class CategoryController {
 
     @PutMapping("/{categoryId}")
     @Operation(summary = "編輯分類")
-    public ResponseEntity<String> editCategory(@PathVariable Integer categoryId, @RequestParam(value = "title") String title) {
+    public ResponseEntity<String> editCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) {
 
-        return new ResponseEntity<>(categoryService.editCategory(categoryId, title), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryService.editCategory(categoryId, categoryDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{deleteId}")

@@ -7,7 +7,6 @@ import com.example.login.dao.post.PostRepo;
 import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
 import com.example.login.dto.blog.PostDto;
-import com.example.login.exception.ApiResponse;
 import com.example.login.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,7 +38,7 @@ public class PostServiceImp implements PostService {
 
         var category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
-        Post post = this.mapper.map(postDto, Post.class);
+        var post = this.mapper.map(postDto, Post.class);
 
         post.setCategory(category);
         post.setUser(user);
@@ -50,31 +47,20 @@ public class PostServiceImp implements PostService {
         return this.mapper.map(post, PostDto.class);
     }
 
-    public PostDto postToDto(Post post) {
-
-        return PostDto.builder()
-                .author(post.getPostPeople())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .build();
-    }
-
-
     public void deletePost(int postId) {
         log.info("刪除PostId {} 文章", postId);
         postRepo.deletePostByPostId(postId).orElseThrow();
     }
 
 
-    public String editPost(String name, int postId, String content, String title) {
-        var post = postRepo.findPostByPostIdAndPostPeople(postId, name).orElseThrow(
+    public PostDto editPost(String name, Integer postId, String content, String title) {
+        var post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId)
         );
-
         post.setContent(content);
         post.setTitle(title);
         postRepo.save(post);
-        return "修改成功";
+        return this.mapper.map(post, PostDto.class);
     }
 
 

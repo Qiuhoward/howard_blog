@@ -2,8 +2,6 @@ package com.example.login.service;
 
 
 import com.example.login.dto.blog.PostDto;
-import com.example.login.exception.ApiResponse;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ public interface PostService {
 
     void deletePost(int postId);
 
-    String editPost(String name, int postId, String content, String title);
+    PostDto editPost(String name, Integer postId, String content, String title);
 
 
     /**

@@ -12,6 +12,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class CategoryDto extends BasicDto {
+    private Integer categoryId;
     private String title;
     private String description;
 }

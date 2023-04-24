@@ -28,7 +28,7 @@ public class CommentController {
     @PostMapping("/post/{postId}/comment")
     @Operation(summary = "新增留言")
     public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto, @PathVariable Integer postId) {
-        return new ResponseEntity<>(commentService.addComment(commentDto,postId), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.addComment(commentDto, postId), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -42,15 +42,14 @@ public class CommentController {
     public ResponseEntity<CommentDto> findCommentByKeyword(@PathVariable String keyword) {
         return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
     }
+
     @PutMapping("/{commentId}")
     @Operation(summary = "編輯留言")
-    public ResponseEntity<CommentDto> editPost(
-            @RequestParam(value = "name") String name,
+    public ResponseEntity<CommentDto> editComment(
             @RequestParam(value = "content") String content,
-            @RequestParam(value = "title") String title,
             @PathVariable Integer commentId) {
 
-        return new ResponseEntity<>(commentService.editComment(name, commentId, content, title), HttpStatus.CREATED);
+        return new ResponseEntity<>(commentService.editComment(commentId, content), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{deleteId}")

@@ -3,7 +3,7 @@ package com.example.login.service;
 import com.example.login.dao.post.Category;
 import com.example.login.dao.post.CategoryRepo;
 import com.example.login.dto.blog.CategoryDto;
-import com.example.login.exception.ResourceIsExistException;
+import com.example.login.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +22,10 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public String addCategory(CategoryDto categoryDto) {
-        String title = categoryDto.getTitle();
-        categoryRepo.findByTitle(title).orElseThrow(
-                () -> new ResourceIsExistException(Category.class, "title", title));
-        var category = Category
-                .builder()
-                .title(title)
-                .build();
+    public CategoryDto addCategory(CategoryDto categoryDto) {
+        var category = this.mapper.map(categoryDto, Category.class);
         categoryRepo.save(category);
-        return "新增成功";
+        return this.mapper.map(category, CategoryDto.class);
     }
 
     @Override
@@ -44,18 +38,18 @@ public class CategoryServiceImp implements CategoryService {
     }
 
     @Override
-    public String editCategory(int categoryId, String title) {
-        var category = categoryRepo.findById(categoryId).orElseThrow(
-                () -> new ResourceIsExistException(Category.class, "categoryId", categoryId));
-
-        category.setTitle(title);
+    public CategoryDto editCategory(int categoryId, CategoryDto categoryDto) {
+        var category = this.mapper.map(categoryDto, Category.class);
         categoryRepo.save(category);
-        return "修改成功";
+
+        return this.mapper.map(category, CategoryDto.class);
     }
 
 
     @Override
     public void deleteCategory(Integer categoryId) {
+        categoryRepo.findById(categoryId).orElseThrow(
+                ()->new ResourceNotFoundException(Category.class,"categoryId",categoryId));
         categoryRepo.deleteById(categoryId);
     }
 

@@ -34,7 +34,7 @@ public class PostController {
 
     @PutMapping("/{postId}")
     @Operation(summary = "編輯文章")
-    public ResponseEntity<String> editPost(
+    public ResponseEntity<PostDto> editPost(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "content") String content,
             @RequestParam(value = "title") String title,

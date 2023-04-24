@@ -13,7 +13,7 @@ public interface CommentService {
 
     List<CommentDto> findAllComment();
 
-    CommentDto editComment(String name, int commentId, String content, String title);
+    CommentDto editComment(Integer commentId, String content);
 
     void deleteComment(Integer commentId);
 

@@ -9,8 +9,6 @@ import com.example.login.exception.ResourceIsExistException;
 import com.example.login.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +28,7 @@ public class CommentServiceImp implements CommentService {
     public CommentDto addComment(CommentDto commentDto, Integer postId) {
         var post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceIsExistException(Post.class, "postId", postId));
-        Comment comment = this.mapper.map(commentDto, Comment.class);
+        var comment = this.mapper.map(commentDto, Comment.class);
         comment.setPost(post);
         commentRepo.save(comment);
 
@@ -45,8 +43,12 @@ public class CommentServiceImp implements CommentService {
                 .collect(Collectors.toList());
     }
 
-    public CommentDto editComment(String name, int commentId, String content, String title) {
-
+    public CommentDto editComment(Integer commentId, String content) {
+        var comment = commentRepo.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException(Comment.class, "commentId", commentId));
+        comment.setContent(content);
+        commentRepo.save(comment);
+        return this.mapper.map(comment, CommentDto.class);
     }
 
 
@@ -57,7 +59,7 @@ public class CommentServiceImp implements CommentService {
 
     @Override
     public List<CommentDto> findCommentByPost(Integer postId) {
-        var post=postRepo.findById(postId).orElseThrow(
+        var post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId));
 
         return commentRepo.findByPost(post)
