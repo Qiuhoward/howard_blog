@@ -39,7 +39,7 @@ public class CommentController {
 
     @GetMapping("/keyword/comments")
     @Operation(summary = "尋找關鍵字留言")
-    public ResponseEntity<CommentDto> findCommentByKeyword(@RequestParam(value = "keyword") String keyword) {
+    public ResponseEntity<List<CommentDto>> findCommentByKeyword(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
     }
 

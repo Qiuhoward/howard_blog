@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,8 +32,8 @@ public class Post {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private Set<Comment> comment;
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    private Set<Comment> comment=new HashSet<>();
 
 
     @Override

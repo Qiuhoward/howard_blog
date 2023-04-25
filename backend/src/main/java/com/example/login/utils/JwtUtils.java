@@ -9,6 +9,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -26,11 +27,11 @@ public class JwtUtils {
     private static final int expireTime = 1000 * 600 * 10;
     private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
     private static final String secretKey = "EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527";
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
 
-    public JwtUtils(PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
+    public JwtUtils(BCryptPasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
         this.passwordEncoder = passwordEncoder;
         this.redisTemplate = redisTemplate;
 

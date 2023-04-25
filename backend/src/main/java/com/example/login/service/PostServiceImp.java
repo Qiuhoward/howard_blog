@@ -70,9 +70,9 @@ public class PostServiceImp implements PostService {
         post.setContent(content);
         post.setTitle(title);
         System.out.println(post.getTitle() + post.getContent());
-        Post post1 = postRepo.save(post);
+        post= postRepo.save(post);
 
-        return this.mapper.map(post1, PostDto.class);
+        return this.mapper.map(post, PostDto.class);
     }
 
 
