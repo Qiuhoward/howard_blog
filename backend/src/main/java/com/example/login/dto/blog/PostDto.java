@@ -19,7 +19,6 @@ public class PostDto  {
     private String content;
     private String title;
     private CategoryDto category;
-
     private Set<CommentDto> commentDtoSet;
 //    private UserDto user;
 

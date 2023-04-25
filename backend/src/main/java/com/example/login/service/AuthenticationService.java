@@ -29,7 +29,6 @@ public class AuthenticationService {
     private final UserRepo userRepo;
     private final JwtUtils jwtUtils;
     private final BcryptUtils bcryptUtils;
-
     private final ModelMapper mapper;
 
     public LoginResponse login(LoginRequest request) throws InternalServerException {
