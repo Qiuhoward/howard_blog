@@ -7,6 +7,7 @@ import com.example.login.dao.post.PostRepo;
 import com.example.login.dto.blog.CommentDto;
 import com.example.login.exception.ResourceIsExistException;
 import com.example.login.exception.ResourceNotFoundException;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Log4j2
 @Service
 public class CommentServiceImp implements CommentService {
 
@@ -33,10 +35,8 @@ public class CommentServiceImp implements CommentService {
         var comment = this.mapper.map(commentDto, Comment.class);
         comment.setPost(post);
         comment.setCreateAt(new Date());
-        commentRepo.save(comment);
-        System.out.println(comment.getContent());
-        System.out.println(commentDto.getContent());
-        return mapper.map(comment,CommentDto.class);
+        comment = commentRepo.save(comment);
+        return mapper.map(comment, CommentDto.class);
     }
 
 
@@ -51,13 +51,13 @@ public class CommentServiceImp implements CommentService {
         var comment = commentRepo.findById(commentId).orElseThrow(
                 () -> new ResourceNotFoundException(Comment.class, "commentId", commentId));
         comment.setContent(content);
-        comment=commentRepo.save(comment);
+        comment = commentRepo.save(comment);
         return this.mapper.map(comment, CommentDto.class);
     }
 
 
     public void deleteComment(Integer commentId) {
-        var comment=commentRepo.findById(commentId)
+        var comment = commentRepo.findById(commentId)
                 .orElseThrow(() -> new ResourceNotFoundException(Comment.class, "commentId", commentId));
         commentRepo.delete(comment);
     }
@@ -74,9 +74,14 @@ public class CommentServiceImp implements CommentService {
     }
 
     @Override
-    public CommentDto findCommentByKeyword(String keyword) {
-        return null;
+    public List<CommentDto> findCommentByKeyword(String keyword) {
+        log.info("關鍵字尋找留言");
+        List<Comment> commentLists = commentRepo.findByContentContaining(keyword);
+
+        return commentLists
+                .stream()
+                .map((comment) -> this.mapper.map(comment, CommentDto.class)).toList();
     }
-
-
 }
+
+

@@ -49,8 +49,7 @@ public class CategoryServiceImp implements CategoryService {
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
         category.setTitle(category.getTitle());
         category.setDescription(category.getDescription());
-        categoryRepo.save(category);
-
+        category=categoryRepo.save(category);
         return this.mapper.map(category, CategoryDto.class);
     }
 

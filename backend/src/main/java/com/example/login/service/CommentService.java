@@ -19,5 +19,5 @@ public interface CommentService {
 
     List<CommentDto> findCommentByPost(Integer postId);
 
-    CommentDto findCommentByKeyword(String keyword);
+    List<CommentDto> findCommentByKeyword(String keyword);
 }

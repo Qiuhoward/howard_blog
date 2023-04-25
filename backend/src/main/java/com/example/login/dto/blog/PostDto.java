@@ -2,6 +2,8 @@ package com.example.login.dto.blog;
 
 import lombok.*;
 
+import java.util.Set;
+
 
 /**
  * <文章傳送封包></文章傳送封包>
@@ -17,6 +19,8 @@ public class PostDto  {
     private String content;
     private String title;
     private CategoryDto category;
+
+    private Set<CommentDto> commentDtoSet;
 //    private UserDto user;
 
 
