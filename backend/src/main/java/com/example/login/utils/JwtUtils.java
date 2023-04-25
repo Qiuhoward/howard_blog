@@ -10,7 +10,6 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -61,8 +60,7 @@ public class JwtUtils {
 
     public RegisterResponse getTokenAndStoreRedis(User user) {
         var token = generateToken(user);
-        redisTemplate.opsForValue().set(user.getName(), token);
-        redisTemplate.expire(token, 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(user.getName(), token, 10, TimeUnit.MINUTES);
         return RegisterResponse.builder()
                 .token(token)
                 .status("傳送token")

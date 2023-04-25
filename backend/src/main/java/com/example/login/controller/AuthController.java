@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
+
 /**
  * <登入相關API>
  */
@@ -34,8 +37,8 @@ public class AuthController {
 
     @PostMapping(value = "/login")
     @Operation(summary = "登入")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) throws InternalServerException {
-        System.out.println(request);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request ) throws InternalServerException, IOException {
+
         return ResponseEntity.ok(service.login(request));
     }
 
