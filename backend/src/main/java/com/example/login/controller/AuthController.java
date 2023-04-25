@@ -29,13 +29,13 @@ public class AuthController {
 
 
 
-    @PostMapping(value = "/register" )
+    @PostMapping( "/register" )
     @Operation(summary = "註冊")
     public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest request){
         return new ResponseEntity<>(service.register(request), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping("/login")
     @Operation(summary = "登入")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request ) throws InternalServerException, IOException {
 
