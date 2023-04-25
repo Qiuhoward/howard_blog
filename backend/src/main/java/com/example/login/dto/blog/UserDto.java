@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <用戶封包></用戶封包>
+ */
 @Getter
 @Setter
 @NoArgsConstructor

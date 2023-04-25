@@ -1,5 +1,6 @@
 package com.example.login.service;
 
+import com.example.login.dto.blog.UserDto;
 import com.example.login.exception.InternalServerException;
 import com.example.login.dao.user.User;
 import com.example.login.dao.user.UserRepo;
@@ -13,6 +14,7 @@ import com.example.login.utils.BcryptUtils;
 import com.example.login.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,6 +30,8 @@ public class AuthenticationService {
     private final JwtUtils jwtUtils;
     private final BcryptUtils bcryptUtils;
 
+    private final ModelMapper mapper;
+
     public LoginResponse login(LoginRequest request) throws InternalServerException {
         log.info("進入登入 -> 參數為{}", request);
 
@@ -42,9 +46,12 @@ public class AuthenticationService {
         }
         log.info("成功登入");
         user.setLastTime(new Date());
-        userRepo.save(user);
+        user = userRepo.save(user);
+        var userDto=this.mapper.map(user, UserDto.class);
+        userDto.setUserName(user.getUsername()); //原始碼命名沒有駝峰式造成吃不到userName變為null
 
-        return new LoginResponse(user, jwtUtils.generateToken(user));
+        return new LoginResponse(userDto, jwtUtils.generateToken(user));
+//        return new LoginResponse(this.mapper.map(user, UserDto.class), jwtUtils.generateToken(user));
 
     }
 
@@ -62,7 +69,7 @@ public class AuthenticationService {
         var user = new User(request);
 
         user.setPassword(encodePassword);
-        userRepo.save(user);
+        user = userRepo.save(user);
 
         return jwtUtils.getTokenAndStoreRedis(user);
     }
