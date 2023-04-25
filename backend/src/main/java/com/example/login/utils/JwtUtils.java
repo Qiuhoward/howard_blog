@@ -61,10 +61,9 @@ public class JwtUtils {
     public RegisterResponse getTokenAndStoreRedis(User user) {
         var token = generateToken(user);
         redisTemplate.opsForValue().set(user.getName(), token, 10, TimeUnit.MINUTES);
-        return RegisterResponse.builder()
-                .token(token)
-                .status("傳送token")
-                .build();
+
+        return new RegisterResponse(token, "傳送token");
+
     }
 
     private Boolean isTokenExpired(String token) {
