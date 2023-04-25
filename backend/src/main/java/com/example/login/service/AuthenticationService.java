@@ -33,8 +33,7 @@ public class AuthenticationService {
 
         //use java8 optional checked null
         var user = userRepo.findUserByUserName(request.getUserName()).orElseThrow(
-                () -> new ResourceNotFoundException(User.class, "userName", request.getUserName())
-        );
+                () -> new ResourceNotFoundException(User.class, "userName", request.getUserName()));
 
         var result = bcryptUtils.checkPassword(request.getPassword(), user.getPassword());
 
@@ -45,11 +44,8 @@ public class AuthenticationService {
         user.setLastTime(new Date());
         userRepo.save(user);
 
-        return LoginResponse
-                .builder()
-                .token(jwtUtils.generateToken(user))
-                .user(user)
-                .build();
+        return new LoginResponse(user, jwtUtils.generateToken(user));
+
     }
 
     public RegisterResponse register(RegisterRequest request) {
@@ -67,7 +63,6 @@ public class AuthenticationService {
 
         user.setPassword(encodePassword);
         userRepo.save(user);
-
 
         return jwtUtils.getTokenAndStoreRedis(user);
     }
