@@ -17,9 +17,8 @@ public interface PostService {
 
     PostDto editPost( Integer postId, String content, String title);
 
-
     /**
-     * pagination
+     * pagination && sort
      */
     PostResponse findAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDic);
 
