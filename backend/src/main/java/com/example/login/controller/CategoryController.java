@@ -37,27 +37,25 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.findAllCategory());
     }
 
-    @GetMapping("/keyword/categorys")
+    @GetMapping("/keyword")
     @Operation(summary = "關鍵字查詢分類")
-    public ResponseEntity<List<CategoryDto> > findCategoryByTitle(@RequestParam(value = "keyword") String keyword) {
+    public ResponseEntity<List<CategoryDto>> findCategoryByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(categoryService.findCategoryByTitle(keyword));
     }
 
     @PutMapping("/{categoryId}")
     @Operation(summary = "編輯分類")
-    public ResponseEntity<CategoryDto> editCategory(@PathVariable Integer categoryId,@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<CategoryDto> editCategory(@PathVariable String categoryId, @RequestBody CategoryDto categoryDto) {
 
-        return new ResponseEntity<>(categoryService.editCategory(categoryId, categoryDto),HttpStatus.OK);
+        return new ResponseEntity<>(categoryService.editCategory(Integer.parseInt(categoryId), categoryDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{deleteId}")
     @Operation(summary = "刪除分類")
-    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer deleteId) {
-        categoryService.deleteCategory(deleteId);
-        return new ResponseEntity<>(new ApiResponse("category"+deleteId+" is deleted", true), HttpStatus.OK);
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable String deleteId) {
+        categoryService.deleteCategory(Integer.parseInt(deleteId));
+        return new ResponseEntity<>(new ApiResponse("category" + deleteId + " is deleted", true), HttpStatus.OK);
     }
-
-
 
 
 }

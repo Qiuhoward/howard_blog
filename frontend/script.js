@@ -15,9 +15,9 @@ loginLink.addEventListener("click", () => {
 });
 console.log(localStorage.getItem("token"));
 //是否登入過
-if (localStorage.getItem("token")) {
-  window.location.href = "http://localhost:5500/index.html";
-}
+// if (localStorage.getItem("token")) {
+//   window.location.href = "http://localhost:5500/index.html";
+// }
 
 btn_register.addEventListener("click", () => {
   let userName = document.getElementById("3").value;
@@ -75,7 +75,6 @@ btn_login.addEventListener("click", (e) => {
       return response.json();
     })
     .then((data) => {
-      window.localStorage.removeItem("token");
       window.localStorage.setItem("token", data.token);
       console.log(data.token);
       if (data.token != null) {

@@ -32,7 +32,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findAllUser());
     }
 
-    @GetMapping("/keyword/user")
+    @GetMapping("/keyword")
     @Operation(summary = "關鍵字查詢用戶")
     public ResponseEntity<List<UserDto>> findUserByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(userService.findUserByTitle(keyword));
@@ -42,23 +42,23 @@ public class UserController {
     @Operation(summary = "編輯用戶個人資料")
     public ResponseEntity<UserDto> editUserInfo(@RequestParam(value = "name") String name,
                                                 @RequestParam(value = "mobile") String mobile,
-                                                @PathVariable Integer userId) {
+                                                @PathVariable String userId) {
 
-        return ResponseEntity.ok(userService.editUserInfo(name, mobile, userId));
+        return ResponseEntity.ok(userService.editUserInfo(name, mobile, Integer.parseInt(userId)));
     }
 
     @PutMapping("/{userId}/password")
     @Operation(summary = "編輯用戶密碼")
     public ResponseEntity<UserDto> editUserPassword(@RequestParam(value = "password") String password,
-                                                    @PathVariable Integer userId) {
+                                                    @PathVariable String userId) {
 
-        return ResponseEntity.ok(userService.editUserPassword(password, userId));
+        return ResponseEntity.ok(userService.editUserPassword(password, Integer.parseInt(userId)));
     }
 
     @DeleteMapping("/{deleteId}")
     @Operation(summary = "刪除用戶")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable Integer deleteId) {
-        userService.deleteUser(deleteId);
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable String deleteId) {
+        userService.deleteUser(Integer.parseInt(deleteId));
         return ResponseEntity.ok(new ApiResponse("user" + deleteId + " is deleted", true));
     }
 

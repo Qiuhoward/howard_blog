@@ -27,8 +27,8 @@ public class CommentController {
 
     @PostMapping("/post/{postId}/comment")
     @Operation(summary = "新增留言")
-    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto, @PathVariable Integer postId) {
-        return new ResponseEntity<>(commentService.addComment(commentDto, postId), HttpStatus.CREATED);
+    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto, @PathVariable String postId) {
+        return new ResponseEntity<>(commentService.addComment(commentDto, Integer.parseInt(postId)), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -37,7 +37,7 @@ public class CommentController {
         return ResponseEntity.ok().body(commentService.findAllComment());
     }
 
-    @GetMapping("/keyword/comments")
+    @GetMapping("/keyword")
     @Operation(summary = "尋找關鍵字留言")
     public ResponseEntity<List<CommentDto>> findCommentByKeyword(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(commentService.findCommentByKeyword(keyword));
@@ -47,23 +47,23 @@ public class CommentController {
     @Operation(summary = "編輯留言")
     public ResponseEntity<CommentDto> editComment(
             @RequestParam(value = "content") String content,
-            @PathVariable Integer commentId) {
+            @PathVariable String commentId) {
 
-        return new ResponseEntity<>(commentService.editComment(commentId, content), HttpStatus.OK);
+        return new ResponseEntity<>(commentService.editComment(Integer.parseInt(commentId), content), HttpStatus.OK);
     }
 
     @DeleteMapping("/{deleteId}")
     @Operation(summary = "刪除留言")
-    public ResponseEntity<ApiResponse> deleteComment(@PathVariable Integer deleteId) {
-        commentService.deleteComment(deleteId);
-        return new ResponseEntity<>(new ApiResponse("comment"+deleteId+" is deleted", true), HttpStatus.OK);
+    public ResponseEntity<ApiResponse> deleteComment(@PathVariable String deleteId) {
+        commentService.deleteComment(Integer.parseInt(deleteId));
+        return new ResponseEntity<>(new ApiResponse("comment" + deleteId + " is deleted", true), HttpStatus.OK);
     }
 
 
     @GetMapping("post/{postId}/comments")
     @Operation(summary = "尋找某篇文章所有留言")
-    public ResponseEntity<List<CommentDto>> findCommentsByPost(@PathVariable Integer postId) {
-        return ResponseEntity.ok().body(commentService.findCommentByPost(postId));
+    public ResponseEntity<List<CommentDto>> findCommentsByPost(@PathVariable String postId) {
+        return ResponseEntity.ok().body(commentService.findCommentByPost(Integer.parseInt(postId)));
     }
 
 

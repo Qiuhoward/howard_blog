@@ -30,8 +30,8 @@ public class PostController {
 
     @PostMapping("/user/{userId}/category/{categoryId}/post")
     @Operation(summary = "新增文章")
-    public ResponseEntity<PostDto> addPost(@RequestBody PostDto postDto, @PathVariable Integer categoryId, @PathVariable Integer userId) {
-        return new ResponseEntity<>(postService.addPost(postDto, categoryId, userId), HttpStatus.CREATED);
+    public ResponseEntity<PostDto> addPost(@RequestBody PostDto postDto, @PathVariable String userId, @PathVariable String categoryId) {
+        return new ResponseEntity<>(postService.addPost(postDto, Integer.parseInt(categoryId), Integer.parseInt(userId)), HttpStatus.CREATED);
     }
 
 
@@ -40,9 +40,9 @@ public class PostController {
     public ResponseEntity<PostDto> editPost(
             @RequestParam(value = "content") String content,
             @RequestParam(value = "title") String title,
-            @PathVariable Integer postId) {
+            @PathVariable String postId) {
 
-        return new ResponseEntity<>(postService.editPost(postId, content, title), HttpStatus.OK);
+        return new ResponseEntity<>(postService.editPost(Integer.parseInt(postId) , content, title), HttpStatus.OK);
     }
 
     @GetMapping("/")
@@ -59,24 +59,24 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     @Operation(summary = "刪除文章")
-    public ResponseEntity<ApiResponse> deletePost(@PathVariable Integer postId) {
-        postService.deletePost(postId);
+    public ResponseEntity<ApiResponse> deletePost(@PathVariable String postId) {
+        postService.deletePost(Integer.parseInt(postId) );
         return ResponseEntity.ok().body(new ApiResponse("deleted", true));
     }
 
     @GetMapping("category/{categoryId}/posts")
     @Operation(summary = "搜尋特定類別文章")
-    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable Integer categoryId) {
-        return ResponseEntity.ok().body(postService.findPostByCategory(categoryId));
+    public ResponseEntity<List<PostDto>> findPostByCategory(@PathVariable String categoryId) {
+        return ResponseEntity.ok().body(postService.findPostByCategory(Integer.parseInt(categoryId) ));
     }
 
     @GetMapping("user/{userId}/posts")
     @Operation(summary = "搜尋特定使用者文章")
-    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable int userId) {
-        return ResponseEntity.ok().body(postService.findPostByUser(userId));
+    public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable String userId) {
+        return ResponseEntity.ok().body(postService.findPostByUser(Integer.parseInt(userId) ));
     }
 
-    @GetMapping("/keyword/posts")
+    @GetMapping("/keyword")
     @Operation(summary = "關鍵字搜尋文章")
     public ResponseEntity<List<PostDto>> findPostByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(postService.findPostByTitle(keyword));
