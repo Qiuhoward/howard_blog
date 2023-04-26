@@ -35,7 +35,7 @@ public class PostServiceImp implements PostService {
 
 
     public PostDto addPost(PostDto postDto, Integer categoryId, Integer userId) {
-        log.info("新增文章");
+        log.info("新增文章 ->用戶Id:{}",userId);
 
         var user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(User.class, "userId", userId));
@@ -53,8 +53,7 @@ public class PostServiceImp implements PostService {
     }
 
     public void deletePost(Integer postId) {
-        log.info("刪除指定文章");
-        log.info("刪除PostId {} 文章", postId);
+        log.info("刪除PostId -> 文章Id:{}", postId);
         var post = postRepo.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException(Post.class, "postId", postId)
         );
@@ -78,7 +77,7 @@ public class PostServiceImp implements PostService {
 
 
     public PostResponse findAllPost(Integer pageNumber, Integer pageSize, String sortBy, String sortDic) {
-        log.info("尋找所有文章");
+        log.info("尋找所有文章用{}做排序",sortBy);
         Sort sort = sortDic.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -96,7 +95,7 @@ public class PostServiceImp implements PostService {
 
 
     public List<PostDto> findPostByCategory(Integer categoryId) {
-        log.info("分類尋找文章");
+        log.info("分類尋找文章 ->分類id:{}",categoryId);
         var category = categoryRepo.findById(categoryId).orElseThrow(
                 () -> new ResourceNotFoundException(Category.class, "categoryId", categoryId));
 
@@ -108,7 +107,7 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<PostDto> findPostByUser(int userId) {
-        log.info("使用者尋找文章");
+        log.info("用戶尋找文章 -> 用戶id {}",userId);
         var user = userRepo.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(User.class, "userId", userId));
 
@@ -120,11 +119,12 @@ public class PostServiceImp implements PostService {
 
     @Override
     public List<PostDto> findPostByTitle(String keyword) {
-        log.info("關鍵字尋找文章");
+        log.info("關鍵字尋找文章 -> keyword:{}",keyword);
         List<Post> postOptional = postRepo.findByTitleContaining(keyword);
-
+        Comparator<Post> postComparator = Comparator.comparing(Post::getPostId);
         return postOptional
                 .stream()
+                .sorted(postComparator.reversed())
                 .map((post) -> this.mapper.map(post, PostDto.class)).toList();
     }
 
