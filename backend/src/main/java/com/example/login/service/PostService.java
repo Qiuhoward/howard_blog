@@ -1,6 +1,7 @@
 package com.example.login.service;
 
 
+import com.example.login.dao.post.Post;
 import com.example.login.dto.blog.PostDto;
 import com.example.login.dto.blog.PostResponse;
 
@@ -27,4 +28,6 @@ public interface PostService {
     List<PostDto> findPostByUser(int userId);
 
     List<PostDto> findPostByTitle(String keyword);
+
+    List<PostDto> findPostByUserAndDesc(Integer userId);
 }

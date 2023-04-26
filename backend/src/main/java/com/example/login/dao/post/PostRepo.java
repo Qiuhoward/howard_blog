@@ -9,9 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepo extends JpaRepository<Post,Integer> {
-    Optional<Post> deleteByPostId(Integer postId);
 
-    Optional<Post> findByUser(User user);
+    List<Post> findByUser(User user);
 
     Optional<Post>findByCategory(Category category);
 

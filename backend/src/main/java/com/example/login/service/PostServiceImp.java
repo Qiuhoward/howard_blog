@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,7 +71,7 @@ public class PostServiceImp implements PostService {
         post.setContent(content);
         post.setTitle(title);
         System.out.println(post.getTitle() + post.getContent());
-        post= postRepo.save(post);
+        post = postRepo.save(post);
 
         return this.mapper.map(post, PostDto.class);
     }
@@ -127,4 +128,18 @@ public class PostServiceImp implements PostService {
                 .map((post) -> this.mapper.map(post, PostDto.class)).toList();
     }
 
+    @Override
+    public List<PostDto> findPostByUserAndDesc(Integer userId) {
+        log.info("使用者尋找文章並且按照降冪排序");
+        var user = userRepo.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException(User.class, "userId", userId));
+        Comparator<Post> postComparator = Comparator.comparing(Post::getPostId);
+        return postRepo.findByUser(user)
+                .stream()
+                .sorted(postComparator.reversed())
+                .map((post) -> this.mapper.map(post, PostDto.class))
+                .collect(Collectors.toList());
+    }
 }
+
+

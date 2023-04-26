@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
+import java.util.List;
+
 /**
  * <過濾器配置檔></過濾器配置檔>
  */
@@ -19,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 public class SecurityFilterConfig {
     private final AuthenticationProvider provider;
     private final JwtFilter jwtFilter;
+    private final List<String> allowHeader;
     private final String[] AUTH_PERMISSION_LIST = {
             "/auth/**",
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
@@ -31,23 +34,34 @@ public class SecurityFilterConfig {
 
     };
 
-    public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter) {
+    public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter, List<String> allowHeader) {
         this.provider = provider;
         this.jwtFilter = jwtFilter;
+        this.allowHeader = allowHeader;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        allowHeader.add("Authorization");
+        allowHeader.add("keyword");
+        allowHeader.add("Content-Type");
+        allowHeader.add("userId");
+        allowHeader.add("postId");
+        allowHeader.add("pageSize");
+        allowHeader.add("pageNumber");
+        allowHeader.add("sortBy");
+        allowHeader.add("sortDir");
+
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
-        config.addAllowedHeader("Authorization");
-        config.addAllowedHeader("Content-Type");
+        config.setAllowedHeaders(allowHeader);
         config.addAllowedMethod("GET");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("OPTIONS");
         config.setAllowCredentials(false);
+
 
         http.authorizeHttpRequests().requestMatchers(AUTH_PERMISSION_LIST)
                 .permitAll()
