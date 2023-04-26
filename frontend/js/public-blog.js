@@ -96,7 +96,7 @@ function findPostByUserIdAndDesc() {
       console.log("fail2");
     });
 }
-search_post.addEventListener('change',()=>{
+search_post.addEventListener('keyup',()=>{
   let keyword=search_post.value;
   let findPostByKeyword_url =  `http://localhost:8080/post/keyword?keyword=${keyword}`
   fetch(findPostByKeyword_url, {
@@ -113,8 +113,15 @@ search_post.addEventListener('change',()=>{
     })
     .then((data) => {
       console.log(data);
-      //clean result 
       public_blog.innerHTML = "";
+      //clean result 
+      if(data==''){
+        let alert=document.createElement("h1");
+        alert.textContent="無相關文章!!"
+        document.getElementById("public_blog").appendChild(alert);
+        return false;
+      }
+      
      
       for (let i = 0; i < data.length; i++) {
         let title = document.createElement("h1");
@@ -130,7 +137,7 @@ search_post.addEventListener('change',()=>{
           
         //category.textContent = data_category;
       }
-      return false;
+  
     })
     .catch((error) => {
       console.log(error);
