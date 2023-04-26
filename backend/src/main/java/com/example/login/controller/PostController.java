@@ -75,7 +75,11 @@ public class PostController {
     public ResponseEntity<List<PostDto>> findPostByUser(@PathVariable String userId) {
         return ResponseEntity.ok().body(postService.findPostByUser(Integer.parseInt(userId) ));
     }
-
+    @PostMapping("user/{userId}/posts/desc")
+    @Operation(summary = "搜尋特定使用者文章")
+    public ResponseEntity<List<PostDto>> findPostByUserAndDesc(@PathVariable String userId) {
+        return ResponseEntity.ok().body(postService.findPostByUserAndDesc(Integer.parseInt(userId) ));
+    }
     @GetMapping("/keyword")
     @Operation(summary = "關鍵字搜尋文章")
     public ResponseEntity<List<PostDto>> findPostByTitle(@RequestParam(value = "keyword") String keyword) {
