@@ -66,8 +66,8 @@ public class AuthenticationService {
 
         var encodePassword = jwtUtils.encode(request.getPassword());
         var user = new User(request);
-
         user.setPassword(encodePassword);
+
         user = userRepo.save(user);
 
         return jwtUtils.getTokenAndStoreRedis(user);

@@ -32,6 +32,8 @@ spring:
           github:
             client-id: {your github id }
             client-secret: {your github secret}
+    user:
+      roles: ADMIN,USER
 server:
   port: 8080
 

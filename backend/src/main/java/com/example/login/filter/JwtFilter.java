@@ -52,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
             if (jwtUtils.isTokenValid(jwt, user)) {
                 //UsernamePasswordAuthenticationToken的作用就是代表一個被驗證的請求對象，並在通過驗證後裝載使用者完整資訊的對象，
                 // 這些資訊包括使用者名稱(username)，密碼(password)，權限(authorities)等。
-                var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user. getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
