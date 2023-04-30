@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         String message = ex.getMessage();
         return new ApiResponse(message, false);
     }
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler( ExpiredJwtException.class)
     public ApiResponse ExpiredJwtException(ExpiredJwtException ex) {
         String message = ex.getMessage();

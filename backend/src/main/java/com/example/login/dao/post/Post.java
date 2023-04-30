@@ -21,6 +21,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
     private String content;
+    private String author;
     private String title;
     private Date createAt;
 

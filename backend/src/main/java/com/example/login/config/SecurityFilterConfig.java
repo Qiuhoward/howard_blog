@@ -40,7 +40,6 @@ public class SecurityFilterConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         allowHeader.add("Authorization");
-        allowHeader.add("keyword");
         allowHeader.add("Content-Type");
         allowHeader.add("userId");
         allowHeader.add("postId");
