@@ -21,6 +21,7 @@ import java.util.Date;
 
 /**
  * <認證服務></認證服務>
+ * jwt在redis那邊存入多一倍時間利用這多一倍的鑰匙來判斷是否過期如果空了就自動產生新的
  */
 @Service
 @Slf4j
@@ -46,10 +47,10 @@ public class AuthenticationService {
         log.info("成功登入");
         user.setLastTime(new Date());
         user = userRepo.save(user);
-        var userDto=this.mapper.map(user, UserDto.class);
+        var userDto = this.mapper.map(user, UserDto.class);
         userDto.setUserName(user.getUsername()); //原始碼命名沒有駝峰式造成吃不到userName變為null
 
-        return new LoginResponse(userDto, jwtUtils.generateToken(user));
+        return new LoginResponse(userDto, jwtUtils.generateToken(user), jwtUtils.generateRefreshToken(user));
 //        return new LoginResponse(this.mapper.map(user, UserDto.class), jwtUtils.generateToken(user));
 
     }

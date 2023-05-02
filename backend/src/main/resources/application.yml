@@ -21,19 +21,32 @@ spring:
     redis:
       port: 6379
 
-  # sso
+application:
   security:
+    jwt:
+      algorithm: SignatureAlgorithm.HS256
+      secret-key: EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527
+      expiration: 1000 * 6000 * 10
+      refresh-token:
+        expiration: 1000 * 6000 * 10 * 7
+
+
     oauth2:
       client:
         registration:
           google:
-            client-id: { your google id}
-            client-secret: {your google secret  }
+            client-id: { your google id }
+            client-secret: { your google secret }
           github:
-            client-id: {your github id }
-            client-secret: {your github secret}
-    user:
-      roles: ADMIN,USER
+            client-id: { your github id }
+            client-secret: { your github secret }
+
+
+
+
+
+
+
 server:
   port: 8080
 

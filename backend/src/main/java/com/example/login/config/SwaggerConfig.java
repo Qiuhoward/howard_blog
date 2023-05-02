@@ -1,7 +1,11 @@
 package com.example.login.config;
 
+
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,10 +27,24 @@ public class SwaggerConfig {
 
     @Bean
     public OpenAPI swaggerAPI() {
+
+        SecurityScheme securityScheme=new SecurityScheme()
+                .name("Authorization")
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+
+        SecurityRequirement securityRequirement=new SecurityRequirement();
+        securityRequirement.addList("Authorization");
+
+
+
         return new OpenAPI().info(
                 new Info()
                         .title("Howard_Blog_API")
                         .version("0.0.1")
-                        .description("This document is provide to frontend engineer to know What's API need??"));
+                        .description("This document is provide to frontend engineer to know What's API need??"))
+                        .components(new Components().addSecuritySchemes("Authorization",securityScheme))
+                        .addSecurityItem(securityRequirement);
     }
 }

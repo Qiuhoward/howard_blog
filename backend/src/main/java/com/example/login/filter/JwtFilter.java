@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -35,7 +36,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String jwt;
         final String userName;
         log.info("header:{}", authHeader);
@@ -48,12 +49,19 @@ public class JwtFilter extends OncePerRequestFilter {
 
         System.out.println(userName);
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
             var user = this.userDetailsService.loadUserByUsername(userName);
+
             if (jwtUtils.isTokenValid(jwt, user)) {
                 //UsernamePasswordAuthenticationToken的作用就是代表一個被驗證的請求對象，並在通過驗證後裝載使用者完整資訊的對象，
                 // 這些資訊包括使用者名稱(username)，密碼(password)，權限(authorities)等。
-                var authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user. getAuthorities());
+                var authenticationToken = new UsernamePasswordAuthenticationToken(
+                        user,
+                        null,
+                        user.getAuthorities());
+
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
