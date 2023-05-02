@@ -11,9 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-@Entity
+
 @Getter
 @Setter
+@Entity
+@ToString
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +28,12 @@ public class User implements UserDetails {
     private Date lastTime;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ToString.Exclude
     private List<Post> posts=new ArrayList<>();
 
 
     @Enumerated(EnumType.STRING)
-    private Provider provider;
+    private Role role;
 
 
     public User(RegisterRequest request) {
@@ -40,6 +43,7 @@ public class User implements UserDetails {
         this.createAt=new Date();
         this.lastTime=new Date();
         this.name=request.getName();
+        this.role=Role.USER;
     }
     public User() {
 
@@ -60,7 +64,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("user"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }//授權部分
     @Override
     public String getUsername() {

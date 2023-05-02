@@ -18,6 +18,7 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -118,13 +119,7 @@
             <nav class="classy-navbar justify-content-between">
               <!-- Subscribe btn -->
               <div class="subscribe-btn">
-                <a
-                  href="#"
-                  class="btn subscribe-btn"
-                  data-toggle="modal"
-                  data-target="#subsModal"
-                  >Subscribe</a
-                >
+              
               </div>
 
               <!-- Navbar Toggler -->
@@ -153,7 +148,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about-us.html">About Us</a></li>
                         <li><a href="public-blog.html">public Blog</a></li>
-                        <li><a href="personnal-blog.html">Personnal Blog</a></li>
+                        <li><a href="personal-blog.html">Personal Blog</a></li>
                         <li><a href="coming-soon.html">Coming Soon</a></li>
                       </ul>
                     </li>
@@ -173,6 +168,8 @@
                         </ul>
                       </div>
                     </li>
+
+                    <li id="log_out"><a href="frontpage.html">Log out</a></li>
                   </ul>
 
                   <!-- Search Form  -->
@@ -225,10 +222,101 @@
                   >
                 </h4>
                 <div class="post-meta mb-50">
-                  <p>By <a href="#">howard</a></p>
-                  <p>(計算留言板的留言總數)3 comments</p>
+                  <p>By <a href="about-us.html">howard</a></p>
                 </div>
-               
+                <div class="card" id="card-html" style="width: 30rem;">
+                  <img src="./img/blog-img/2.jpg" class="card-img-top" alt="${data_title}">
+                  
+                    <div>
+                      <div class="article_button">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                          data-whatever="@mdo"
+                        >
+                          編輯 <i class="fa-solid fa-book-tanakh"></i>
+                        </button>
+                      </div>
+                      <div
+                      class="modal fade"
+                      id="edit_exampleModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog">
+                        nt-namecontent-name
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="edit_exampleModalLabel">
+                              Post Now
+                            </h5>
+                            <button
+                              type="button"
+                              class="close"
+                              data-dismiss="modal"
+                              aria-label="Close"
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form>
+                              <div class="form-group">
+                                <label for="title" class="col-form-label"
+                                  >文章標題:</label
+                                >
+                                <input type="text" class="form-control" id="edit_title" />
+                              </div>
+                              <div class="form-group">
+                                <label for="type" class="col-form-label"
+                                  >類別:</label
+                                >
+                                <input type="text" class="form-control" id="edit_type" />
+                              </div>
+                              <div class="form-group">
+                                <label for="content" class="col-form-label"
+                                  >文章內容:</label
+                                >
+                                <textarea
+                                  class="form-control"
+                                  id="edit_content"
+                                ></textarea>
+                              </div>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-primary"
+                              id="edit_send-message"
+                            >
+                              Post
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                    <div class="card-body id=card-body">
+                    <p class ="card-text" id="edit_card-text">
+                      <!-- <button type="button" id="button_edit" class="btn btn-success">編輯</button>
+                      <button type="button" id="button_delete"class="btn btn-danger">刪除</button> -->
+                    </p>
+                  </div>
+                <h6 align="right"><p id="addPost_author"> </p><h6>
+
+                  </div>
+                </div>
                 <p id="addPost_content">
                 </p>
               </div>
@@ -544,19 +632,7 @@
             
               <!-- Widget Area -->
               <div class="sidebar-widget-area">
-                <div class="widget-content">
-                  <form action="#" class="newsletterForm">
-                    <input
-                      type="email"
-                      name="email"titleform-control
-                      id="subscribesForm"
-                      placeholder="Your e-mail here"
-                    />
-                    <button type="submit" class="btn original-btn">
-                      Subscribe
-                    </button>
-                  </form>
-                </div>
+                
               </div>
 
               <!-- Widget Area -->
@@ -597,6 +673,7 @@
                   <div
                     class="single-blog-post d-flex align-items-center widget-post"
                   >
+                  
                     <!-- Post Thumbnail -->
                     <div class="post-thumbnail">
                       <img src="img/blog-img/lp2.jpg" alt="" />
@@ -824,6 +901,7 @@
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
     <script src="js/popper.min.js"></script>
+    
     <!-- Bootstrap js -->
     <script src="js/bootstrap.min.js"></script>
     <!-- Plugins js -->

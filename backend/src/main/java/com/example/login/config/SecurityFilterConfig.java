@@ -1,5 +1,6 @@
 package com.example.login.config;
 
+import com.example.login.dao.user.Role;
 import com.example.login.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,12 +27,8 @@ public class SecurityFilterConfig {
             "/auth/**",
             "/v3/api-docs/**", // spring security+swagger整合的坑(換上version 3)
             "/swagger-ui/**",//訪問swagger地址
-            "/test/**",
-            "/user/**",
-            "/comment/**",
             "/post/**",
-            "/category/**"
-
+            "/comment/**",
     };
 
     public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter, List<String> allowHeader) {
@@ -43,7 +40,6 @@ public class SecurityFilterConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         allowHeader.add("Authorization");
-        allowHeader.add("keyword");
         allowHeader.add("Content-Type");
         allowHeader.add("userId");
         allowHeader.add("postId");
@@ -65,6 +61,7 @@ public class SecurityFilterConfig {
 
         http.authorizeHttpRequests().requestMatchers(AUTH_PERMISSION_LIST)
                 .permitAll()
+                .requestMatchers("/user/**","/category/**","/test/**").hasAuthority(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

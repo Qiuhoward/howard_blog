@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,9 +24,18 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
 
-    private static final int expireTime = 1000 * 600 * 10;
-    private static final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
-    private static final String secretKey = "EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527";
+    @Value("${application.security.jwt.expiration}")
+    private long expireTime ;
+
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private int refreshExpireTime;
+
+    @Value("${application.security.jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${application.security.jwt.algorithm}")
+    private SignatureAlgorithm alg;
+
     private final BCryptPasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
 
@@ -57,12 +67,23 @@ public class JwtUtils {
                 .compact();
     }
 
+    public String generateRefreshToken(User user) {
+        return Jwts.builder()
+                .setIssuer("howard")
+                .setSubject(user.getUsername())//帳號不是名字
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + refreshExpireTime))
+                .signWith(getKey(), alg)//鑰匙和演算法執行簽名
+                .compact();
+    }
+
 
     public RegisterResponse getTokenAndStoreRedis(User user) {
-        var token = generateToken(user);
-        redisTemplate.opsForValue().set(user.getName(), token, 10, TimeUnit.MINUTES);
+        var accessToken = generateToken(user);
+        var refreshToken=generateRefreshToken(user);
+        redisTemplate.opsForValue().set(user.getName(), refreshToken, 10, TimeUnit.MINUTES);
 
-        return new RegisterResponse(token, "傳送token");
+        return new RegisterResponse("傳送token",accessToken,refreshToken);
 
     }
 

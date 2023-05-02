@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class PostDto  {
     private Integer postId;
+    private String author;
     private String content;
     private String title;
     private CategoryDto category;
