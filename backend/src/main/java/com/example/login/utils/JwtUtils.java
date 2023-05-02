@@ -1,5 +1,7 @@
 package com.example.login.utils;
 
+import com.example.login.dao.user.Token;
+import com.example.login.dao.user.TokenRepo;
 import com.example.login.dao.user.User;
 import com.example.login.dto.account.RegisterResponse;
 import io.jsonwebtoken.Claims;
@@ -25,25 +27,26 @@ import java.util.function.Function;
 public class JwtUtils {
 
     @Value("${application.security.jwt.expiration}")
-    private long expireTime ;
+    private long expireTime;
 
     @Value("${application.security.jwt.refresh-token.expiration}")
-    private int refreshExpireTime;
+    private long refreshExpireTime;
 
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
-    @Value("${application.security.jwt.algorithm}")
-    private SignatureAlgorithm alg;
+    private final SignatureAlgorithm alg = SignatureAlgorithm.HS256;
 
     private final BCryptPasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
+    private final TokenRepo tokenRepo;
 
 
-    public JwtUtils(BCryptPasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
+    public JwtUtils(BCryptPasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate, TokenRepo tokenRepo) {
         this.passwordEncoder = passwordEncoder;
         this.redisTemplate = redisTemplate;
 
+        this.tokenRepo = tokenRepo;
     }
 
     /**
@@ -78,12 +81,15 @@ public class JwtUtils {
     }
 
 
-    public RegisterResponse getTokenAndStoreRedis(User user) {
+    public RegisterResponse getTokenAndStoreToken(User user,boolean revoked) {
         var accessToken = generateToken(user);
-        var refreshToken=generateRefreshToken(user);
+        var refreshToken = generateRefreshToken(user);
+        if(revoked){
+            revokeAllUserTokens(user);
+        }
+        saveToken(user, accessToken);
         redisTemplate.opsForValue().set(user.getName(), refreshToken, 10, TimeUnit.MINUTES);
-
-        return new RegisterResponse("傳送token",accessToken,refreshToken);
+        return new RegisterResponse("傳送token", accessToken, refreshToken);
 
     }
 
@@ -132,4 +138,31 @@ public class JwtUtils {
     public String encode(String password) {
         return passwordEncoder.encode(password);
     }
+
+
+    /**
+     * 撤銷原來的token
+     */
+    private void revokeAllUserTokens(User user) {
+        var validUserTokenList = tokenRepo.findTokenByUser(user);
+        if (validUserTokenList.isEmpty())
+            return;
+        validUserTokenList.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepo.saveAll(validUserTokenList);
+    }
+
+
+    private void saveToken(User user, String token) {
+        var accessToken = Token.builder()
+                .user(user)
+                .token(token)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepo.save(accessToken);
+    }
+
 }

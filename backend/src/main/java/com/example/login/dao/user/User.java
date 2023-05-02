@@ -31,6 +31,9 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Post> posts=new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    private List<Token>tokens=new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;

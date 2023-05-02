@@ -37,7 +37,7 @@ public class CategoryController {
         return ResponseEntity.ok().body(categoryService.findAllCategory());
     }
 
-    @GetMapping("/zkeyword")
+    @GetMapping("/keyword")
     @Operation(summary = "關鍵字查詢分類")
     public ResponseEntity<List<CategoryDto>> findCategoryByTitle(@RequestParam(value = "keyword") String keyword) {
         return ResponseEntity.ok().body(categoryService.findCategoryByTitle(keyword));

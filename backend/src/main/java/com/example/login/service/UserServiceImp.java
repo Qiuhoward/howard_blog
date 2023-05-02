@@ -54,9 +54,11 @@ public class UserServiceImp implements UserService {
 
     @Override
     public List<UserDto> findAllUser() {
-        return userRepo.findAll()
+
+        return  userRepo.findAll()
                 .stream()
                 .map((user) -> this.mapper.map(user, UserDto.class)).toList();
+
     }
 
     @Override

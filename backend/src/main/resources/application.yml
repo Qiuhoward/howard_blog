@@ -24,11 +24,10 @@ spring:
 application:
   security:
     jwt:
-      algorithm: SignatureAlgorithm.HS256
       secret-key: EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527
-      expiration: 1000 * 6000 * 10
+      expiration: 3600000
       refresh-token:
-        expiration: 1000 * 6000 * 10 * 7
+        expiration: 7200000
 
 
     oauth2:

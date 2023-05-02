@@ -8,6 +8,8 @@ import com.example.login.exception.InternalServerException;
 import com.example.login.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,6 +43,13 @@ public class AuthController {
 
         return ResponseEntity.ok(service.login(request));
     }
+
+    @PostMapping("/refresh-token")
+    @Operation(summary = "刷新token")
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        service.refreshToken(request,response);
+    }
+
 
 
 }

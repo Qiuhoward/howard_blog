@@ -29,6 +29,7 @@ public class SecurityFilterConfig {
             "/swagger-ui/**",//訪問swagger地址
             "/post/**",
             "/comment/**",
+            "/test/**"
     };
 
     public SecurityFilterConfig(AuthenticationProvider provider, JwtFilter jwtFilter, List<String> allowHeader) {

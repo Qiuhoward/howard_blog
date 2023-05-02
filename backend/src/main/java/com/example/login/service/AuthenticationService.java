@@ -1,5 +1,7 @@
 package com.example.login.service;
 
+import com.example.login.dao.user.Token;
+import com.example.login.dao.user.TokenRepo;
 import com.example.login.dto.blog.UserDto;
 import com.example.login.exception.InternalServerException;
 import com.example.login.dao.user.User;
@@ -12,9 +14,13 @@ import com.example.login.exception.ResourceIsExistException;
 import com.example.login.exception.ResourceNotFoundException;
 import com.example.login.utils.BcryptUtils;
 import com.example.login.utils.JwtUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,6 +34,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepo userRepo;
+
+    private final TokenRepo tokenRepo;
     private final JwtUtils jwtUtils;
     private final BcryptUtils bcryptUtils;
     private final ModelMapper mapper;
@@ -48,8 +56,8 @@ public class AuthenticationService {
         user.setLastTime(new Date());
         user = userRepo.save(user);
         var userDto = this.mapper.map(user, UserDto.class);
-        userDto.setUserName(user.getUsername()); //原始碼命名沒有駝峰式造成吃不到userName變為null
-
+        userDto.setUsername(user.getUsername());
+        jwtUtils.getTokenAndStoreToken(user,true);
         return new LoginResponse(userDto, jwtUtils.generateToken(user), jwtUtils.generateRefreshToken(user));
 //        return new LoginResponse(this.mapper.map(user, UserDto.class), jwtUtils.generateToken(user));
 
@@ -68,11 +76,32 @@ public class AuthenticationService {
         var encodePassword = jwtUtils.encode(request.getPassword());
         var user = new User(request);
         user.setPassword(encodePassword);
-
         user = userRepo.save(user);
-
-        return jwtUtils.getTokenAndStoreRedis(user);
+        return jwtUtils.getTokenAndStoreToken(user,false);
     }
 
+    //前端判定access token是否過期如果過期打refresh token這個接口戴上refresh Token
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authHeader == null || !authHeader.startsWith("Bearer "))
+            return;
+        var refreshToken = authHeader.substring(7);
+        var user = userRepo.findUserByUserName(jwtUtils.extraUserName(refreshToken)).orElseThrow(
+                () -> new ResourceNotFoundException(User.class, "userName", userRepo));
 
+        if (jwtUtils.isTokenValid(refreshToken, user)) {
+            var accessToken = jwtUtils.generateToken(user);
+            //還沒弄
+            var newRefreshToken = jwtUtils.generateRefreshToken(user);
+            response.addCookie(createCookie("access_token", accessToken));
+            response.addCookie(createCookie("refresh_token", newRefreshToken));
+        }
+    }
+
+    private Cookie createCookie(String name, String value) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        return cookie;
+    }
 }
