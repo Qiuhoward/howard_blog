@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="width=device-width ,initial-scale=1.0"
+    />
+    <title>Website With Login & Registration</title>
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
+    <link rel="stylesheet" href="css/frontpage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+      <!-- action為提交網址url -->
+      <form action="#" class="search-bar">
+        <input type="text" placeholder="Search....." />
+        <button>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </header>
+
+    <div class="background"></div>
+    <div class="container">
+      <div class="content">
+        <h2 class="logo"><i class="fa-solid fa-basketball"></i>Howard Blog</h2>
+        <div class="scription">
+          <h2>Welcome!<br /><span> To My New Website!!!</span></h2>
+          <p>
+            If you have any question,you can contact me through the following
+            contact information Let start to blogging your life!!
+          </p>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/profile.php?id=100011345830329"
+              target="_blank"
+              class="facebook"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a href="#" class="google"><i class="fa-brands fa-google"></i></a>
+            <a
+              href="https://github.com/Qiuhoward"
+              target="_blank"
+              class="github"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="#" class="instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-box">
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
+
+        <div class="form-box login">
+          <form action="#">
+            <h2>Sign In</h2>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" id="1" type="text" required />
+              <!-- required為必填輸入 -->
+              <label>Email</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon"> <i class="fa-solid fa-key"></i> </span>
+              <input autocomplete="off" id="2" type="password" required />
+              <!-- required為必填輸入 -->
+              <label>Password</label>
+            </div>
+            <div class="remember-forget">
+              <label><input type="checkbox" />Remember me </label>
+              <a href="#">forget password</a>
+            </div>
+            <button class="btn btn_login">Sign In</button>
+            <div class="login-register">
+              <p>
+                Dont have an account?<a href="#" class="register-link"
+                  >Sign up</a
+                >
+              </p>
+
+              <div class="social-icons sign-in">
+                <a href="#" target="_blank" class="facebook"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+                <a
+                  href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&client_id=884058347084-a2il2gbn6lflaqmtv5c5m7d76l9vll87.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fwww.brandcrowd.com%2Fsignin-google&scope=openid%20profile%20email&state=CfDJ8IvzqFzHTtFGoh34l-99SRYXI4Xr-828ks092AYS-BK1QeBcCL8vgPLwhUH-P6qM4qLZoP6Y84ji-KxAHx3qxGe_pWyyjXHIOObDY-lG8xyXY2NGlMWPfFCT8atqMZ2ZoHQ_rTdh1vYSHKk844OZPiM0tHOqp4lyIcDDHVGFw1Refimma7OD9dJif9zHCMb7E7-P0_9gmJKPB8zVvie06CwR4A_qd1ZmshqojZ31HZWdMoc6l_6xvbcg868WCplQwome_5xdQO2cpf3bDfhzfym0vedEdCfhAtZRDwwxig1L9VyM3PI_Jhqva9rkdbBMBTgdmaFzeyNmyc65dMYPC4jeqnZAo0dPfAWnsCBjgwMq8vCt-phgxDuuyU2rp0NuwYQamfGtSz6i04FxDxtaucXqrKozgVgCC_pb1gXpBskM1MUMAIo9MIrSv_9wIBo8UDBGMfseQO_jy4L4RnfJCjqPy19M2eJ1uJ3L5ZhmwN8eiIFMRxP_uZQwwVB2lbVlZt3SbGLFAda-oyjUwAezPOk44Q8bXmYuAu0pPPpM3synm0LiISda_QjT_J4cJJjBH1pqBMJWBEUHeaH00K8ZQ2t2H-MT1A7bQQboubHUkyEO4twCEMIBNiPbDYF1A_VoH7XtqU0k6VW91kGRobfHTNVZTDmyARb6XwigW728mcXztNDRqwNRn2x3khWSXY5N0z6JD232Fp0NaElcncYzpfmJL8RSWPRdU-xv0PtsTExXhhkpgnDCkuJ37RWhtFno3auZVmz8IvdN5dxb6Zm3oNKuVP5eNvlF9FAkNVE26Ou_Fc9oyb-MD4W_B2bFAqiR1xPOhIvMhx7vUPyjSgwmvVqTUAYubRyJHFY0aS6ltywRdjv2RvQeGQtmeUFbcDKiFGzMd1vThJSiESZk1D66QJin-Y-RfycgN7x9rHktH9nWIesnSzO_f2hflJ9WvivWx4r8EUSJH6PiqmJj1ffAG7sdHZ0HAO9lzsySNwB6A34tSTa6141tDbxX32TXUwWt8cqAfVqSAhTz6RF5TyfiwnokT12wjDOAmHinZnjRgoWHgS16RhJS_RK_w5sd5_YQxhpSL2YbxYnFpZ-YtfhLixhmINpa_g3jOwUjGWy1mGFmy-B5X5n5PPhY11AOszy3ULgyD6axTofmhWpMhvKL8xd8XeuZVeKiMG-8eVTsmme-AeDYBDsvCMa-sYwR3485pw&prompt=consent&service=lso&o2v=2&flowName=GeneralOAuthFlow"
+                  target="_blank"
+                  class="google"
+                >
+                  <i class="fa-brands fa-google"></i>
+                </a>
+                <a
+                  href="https://github.com/login/oauth/authorize?scope=user:email&client_id=ef1fd9d039915c402869&client_secret=4c4fe8802f6c354a21d0b05aa88ba781b4699931"
+                  target="_blank"
+                  class="github"
+                >
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="form-box register">
+          <form action="#">
+            <h2>Sign Up</h2>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input autocomplete="off" id="3" type="text" required />
+              <!-- required為必填輸入 -->
+              <label>Name</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" id="4" type="text" required />
+
+              <!-- required為必填輸入 -->
+              <label>Email</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-solid fa-key"></i>
+              </span>
+              <input autocomplete="off" id="5" type="password" required />
+
+              <!-- required為必填輸入 -->
+              <label>Password</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" id="6" type="text" required />
+              <!-- required為必填輸入 -->
+              <label>mobile</label>
+            </div>
+
+            <div class="remember-forget">
+              <label
+                ><input type="checkbox" />I agree to the tems & conditions
+              </label>
+            </div>
+            <button type="submit" class="btn btn_register">Sign Up</button>
+            <div class="login-register">
+              <p>
+                Already have an account?<a href="#" class="login-link"
+                  >Sign in</a
+                >
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/frontpage.js"></script>
+  </body>
+</html>
