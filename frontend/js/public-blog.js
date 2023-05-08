@@ -8,11 +8,10 @@ let addPost_url = `http://localhost:8080/post/user/${userId}/category/${category
 let search_post = document.getElementById("search_post");
 let postId;
 let card_html = document.getElementById("card-html");
-let PostByUserIdAndDesc_url = `http://localhost:8080/post/?pageSize=15&pageNumber=0&sortBy=postId&sortDir=desc`;
+let PostByDesc_url = `http://localhost:8080/post/?pageSize=15&pageNumber=0&sortBy=postId&sortDir=desc`;
 let editPost_url = "http://localhost:8080/post/6?content=git&title=git";//編輯
 let button_edit = document.getElementById("button_edit");
 let button_delete = document.getElementById("button_delete");
-
 //修改文章
 // .addEventListener('click',()=>{
 
@@ -72,7 +71,7 @@ btn_btn_primary.addEventListener("click", () => {
 //
 //要存在哪裡 以及 作者改為分類 分類存到post資料庫(後端)
 window.onload = function () {
-  findPostByUserIdAndDesc();
+  findPostByDesc();
   checkTokenIsExpired();
 };
 function checkTokenIsExpired() {
@@ -82,8 +81,8 @@ function checkTokenIsExpired() {
     window.location.href = "frontpage.html";
   }
 }
-function findPostByUserIdAndDesc() {
-  fetch(PostByUserIdAndDesc_url, {
+function findPostByDesc() {
+  fetch(PostByDesc_url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -164,13 +163,7 @@ search_post.addEventListener("keyup", () => {
         let str = `<div class="card" style="width: 30rem;  ">
         <img src="./img/blog-img/2.jpg" class="card-img-top" alt="${data_title}">
         <div class="card-body">
-         <div>
-        
-       <h1>  <button type="button" class="btn btn-primary btn-lg">${data_title}</button><h1>
-        <button type="button" class="btn btn-success">編輯</button>
-        <button type="button" class="btn btn-danger">刪除</button>
-        
-        </div>
+        <h1>${data_title}</h1>
           <p class="card-text">
           ${data_content}</p>
           <h6 align=right>By ${data_author} </h6>
@@ -190,37 +183,4 @@ search_post.addEventListener("keyup", () => {
     });
 });
 
-// function getLastFunction() {
-//   fetch(findLastPost_url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: "Bearer " + token,
-//     },
-//     body: JSON.stringify({ userId }),
-//   })
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       let title = data.title;
-//       addPost_title.textContent = title;
 
-//       let content = data.content;
-//       addPost_content.textContent = content;
-
-//       let category = data.category;
-//       // addPost_category.textContent = category;
-
-//       console.log(title, content, category);
-//       return false;
-//       alert("文章新增成功");
-//       // window.location.href = index_url;
-
-//       window.location.href = "http://localhost:5500/index.html";
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       console.log("fail2");
-//     });
-// }

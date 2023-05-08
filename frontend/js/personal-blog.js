@@ -8,12 +8,11 @@ let addPost_content = document.getElementById("addPost_content");
 let addPost_category = document.getElementById("addPost_category");
 let log_out = document.getElementById("log_out"); //登出
 let personal_blog = document.getElementById("personal_blog"); //父層
-
+let card_html = document.getElementById("card-html");
 let addPost_url = `http://localhost:8080/post/user/${userId}/category/${categoryId}/post`;
 let search_post = document.getElementById("search_post");
 // let findLastPost_url = `http://localhost:8080/post/last/${addPost_userId}`;
 let PostByUserIdAndDesc_url = `http://localhost:8080/post/user/${userId}/posts/desc`;
-
 log_out.addEventListener("click", () => {
   localStorage.removeItem("access_token");
 });
@@ -59,7 +58,9 @@ window.onload = function () {
   findPostByUserIdAndDesc();
   checkTokenIsExpired();
 };
+
 function checkTokenIsExpired() {
+  let token = localStorage.getItem("access_token");
   if (token == null) {
     window.location.href = "frontpage.html";
   }
@@ -71,7 +72,8 @@ function findPostByUserIdAndDesc() {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token,
     },
-    body: JSON.stringify({ userId }),
+
+    body: JSON.stringify(userId),
   })
     .then(function (response) {
       return response.json();
@@ -81,15 +83,24 @@ function findPostByUserIdAndDesc() {
 
       for (let i = 0; i < data.length; i++) {
         let title = document.createElement("h1");
-        let content = document.createElement("p");
-
         let data_title = data[i].title;
         let data_content = data[i].content;
+        let data_author = data[i].author;
+        title.innerHTML = "";
+        card_html.innerHTML = "";
+        let str = `<div class="card" style="width: 30rem;  ">
+        <img src="./img/blog-img/2.jpg" class="card-img-top" alt="${data_title}">
+        <div class="card-body">
+        <h1>${data_title}</h1>
+          <p class="card-text">
+          ${data_content}</p>
+          <h6 align=right>By ${data_author} </h6>
+        </div>
+      </div>`;
 
-        title.textContent = data_title;
-        content.textContent = data_content;
+        title.innerHTML = str;
+
         document.getElementById("personal_blog").appendChild(title);
-        document.getElementById("personal_blog").appendChild(content);
 
         //category.textContent = data_category;
       }
@@ -100,6 +111,7 @@ function findPostByUserIdAndDesc() {
       console.log("fail2");
     });
 }
+
 search_post.addEventListener("keyup", () => {
   let keyword = search_post.value;
   let findPostByKeyword_url = `http://localhost:8080/post/keyword?keyword=${keyword}`;
@@ -119,6 +131,8 @@ search_post.addEventListener("keyup", () => {
       console.log(data);
       //clean result
       personal_blog.innerHTML = "";
+      card_html.innerHTML = "";
+
       if (data == "") {
         let alert = document.createElement("h1");
         alert.textContent = "無相關文章!!!";
@@ -127,23 +141,30 @@ search_post.addEventListener("keyup", () => {
 
       for (let i = 0; i < data.length; i++) {
         let title = document.createElement("h1");
-        let content = document.createElement("p");
-
         let data_title = data[i].title;
         let data_content = data[i].content;
+        let data_author = data[i].author;
+        title.innerHTML = "";
+        card_html.innerHTML = "";
+        let str = `<div class="card" style="width: 30rem;  ">
+        <img src="./img/blog-img/2.jpg" class="card-img-top" alt="${data_title}">
+        <div class="card-body">
+        <h1>${data_title}</h1>
+          <p class="card-text">
+          ${data_content}</p>
+          <h6 align=right>By ${data_author} </h6>
+        </div>
+      </div>`;
 
-        title.textContent = data_title;
-        content.textContent = data_content;
+        title.innerHTML = str;
+
         document.getElementById("personal_blog").appendChild(title);
-        document.getElementById("personal_blog").appendChild(content);
 
         //category.textContent = data_category;
       }
-      return false;
     })
     .catch((error) => {
       console.log(error);
       console.log("fail2");
     });
 });
-
