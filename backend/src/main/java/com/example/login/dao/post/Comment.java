@@ -18,7 +18,6 @@ public class Comment {
     private Integer commentId;
     private String content;
     private Date createAt;
-
     @ManyToOne
     private Post post;
 

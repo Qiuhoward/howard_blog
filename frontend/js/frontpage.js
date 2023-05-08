@@ -13,7 +13,6 @@ registerLink.addEventListener("click", () => {
 loginLink.addEventListener("click", () => {
   logBox.classList.remove("active");
 });
-console.log(localStorage.getItem("token"));
 //是否登入過
 // if (localStorage.getItem("token")) {
 //   window.location.href = "http://localhost:5500/index.html";
@@ -41,9 +40,13 @@ btn_register.addEventListener("click", () => {
       return response.json;
     })
     .then((data) => {
-      localStorage.setItem("token", data.token);
-      console.log(data.token);
-      if (data.token != null) {
+    
+
+      localStorage.setItem("access_token", data.accessToken);
+
+      console.log(data.accessToken);
+      
+      if (data.accessToken != null) {
         window.location.href = "http://localhost:5500/index.html";
       }
     })
@@ -75,9 +78,12 @@ btn_login.addEventListener("click", (e) => {
       return response.json();
     })
     .then((data) => {
-      window.localStorage.setItem("token", data.token);
-      console.log(data.token);
-      if (data.token != null) {
+
+      window.localStorage.setItem("access_token", data.accessToken);
+      window.localStorage.setItem("user_id",data.userDto.userId)
+      console.log(data.accessToken);
+     
+      if (data.accessToken != null) {
         alert("login success");
         window.location.href = "http://localhost:5500/index.html";
       }

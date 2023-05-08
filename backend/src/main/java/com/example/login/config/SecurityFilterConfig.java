@@ -43,6 +43,7 @@ public class SecurityFilterConfig {
         allowHeader.add("Authorization");
         allowHeader.add("Content-Type");
         allowHeader.add("userId");
+        allowHeader.add("keyword");
         allowHeader.add("postId");
         allowHeader.add("pageSize");
         allowHeader.add("pageNumber");

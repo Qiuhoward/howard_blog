@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="width=device-width ,initial-scale=1.0"
+    />
+    <title>Website With Login & Registration</title>
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
+    <link rel="stylesheet" href="css/frontpage.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+      <!-- action為提交網址url -->
+      <form action="#" class="search-bar">
+        <input type="text" placeholder="Search....." />
+        <button>
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </header>
+
+    <div class="background"></div>
+    <div class="container">
+      <div class="content">
+        <h2 class="logo"><i class="fa-solid fa-basketball"></i>後台系統</h2>
+        <div class="scription">
+          <h2>Welcome!<br /><span>backend__permission_system</span></h2>
+          <p>
+            If you have any question,you can contact me through the following
+            contact information Let start to blogging your life!!
+          </p>
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/profile.php?id=100011345830329"
+              target="_blank"
+              class="facebook"
+              ><i class="fa-brands fa-facebook"></i
+            ></a>
+            <a href="#" class="google"><i class="fa-brands fa-google"></i></a>
+            <a
+              href="https://github.com/Qiuhoward"
+              target="_blank"
+              class="github"
+              ><i class="fa-brands fa-github"></i
+            ></a>
+            <a href="#" class="instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="log-box">
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
+
+        <div class="form-box login">
+          <form action="#">
+            <h2>Sign In</h2>
+
+            <div class="input-box">
+              <span class="icon">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input autocomplete="off" id="1" type="text" required />
+              <!-- required為必填輸入 -->
+              <label>Email</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon"> <i class="fa-solid fa-key"></i> </span>
+              <input autocomplete="off" id="2" type="password" required />
+              <!-- required為必填輸入 -->
+              <label>Password</label>
+            </div>
+            <div class="remember-forget">
+              <label><input type="checkbox" />Remember me </label>
+              <a href="#">forget password</a>
+            </div>
+            <button class="btn btn_login">Sign In</button>
+            
+          </form>
+        </div>
+
+       
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/frontpage_backend.js"></script>
+  </body>
+</html>

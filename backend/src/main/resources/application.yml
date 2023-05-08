@@ -25,9 +25,9 @@ application:
   security:
     jwt:
       secret-key: EHMcQfTjWnZq4t7wzCFJaNdRgUdasdaffsafdafaf5735727527
-      expiration: 3600000
+      expiration: 36000000
       refresh-token:
-        expiration: 7200000
+        expiration: 72000000
 
 
     oauth2:

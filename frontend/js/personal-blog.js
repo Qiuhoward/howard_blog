@@ -1,21 +1,21 @@
 const btn_btn_primary = document.getElementById("send-message"); //id不要加dot .
-const token = window.localStorage.getItem("token");
+let token = window.localStorage.getItem("access_token");
 
-let userId = 3;
+let userId = window.localStorage.getItem("user_id");
 let categoryId = 3;
 let addPost_title = document.getElementById("addPost_title");
 let addPost_content = document.getElementById("addPost_content");
 let addPost_category = document.getElementById("addPost_category");
 let log_out = document.getElementById("log_out"); //登出
 let personal_blog = document.getElementById("personal_blog"); //父層
-let addPost_userId = 1;
+
 let addPost_url = `http://localhost:8080/post/user/${userId}/category/${categoryId}/post`;
 let search_post = document.getElementById("search_post");
 // let findLastPost_url = `http://localhost:8080/post/last/${addPost_userId}`;
-let findPostByUserId_url = `http://localhost:8080/post/user/${userId}/posts/desc`;
+let PostByUserIdAndDesc_url = `http://localhost:8080/post/user/${userId}/posts/desc`;
 
 log_out.addEventListener("click", () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("access_token");
 });
 btn_btn_primary.addEventListener("click", () => {
   let title = document.getElementById("title").value;
@@ -56,18 +56,16 @@ btn_btn_primary.addEventListener("click", () => {
 //
 //要存在哪裡 以及 作者改為分類 分類存到post資料庫(後端)
 window.onload = function () {
-  findPostByUserId();
+  findPostByUserIdAndDesc();
   checkTokenIsExpired();
 };
 function checkTokenIsExpired() {
-
-  let token = localStorage.getItem("token");
   if (token == null) {
     window.location.href = "frontpage.html";
   }
 }
-function findPostByUserId() {
-  fetch(findPostByUserId_url, {
+function findPostByUserIdAndDesc() {
+  fetch(PostByUserIdAndDesc_url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -149,37 +147,3 @@ search_post.addEventListener("keyup", () => {
     });
 });
 
-// function getLastFunction() {
-//   fetch(findLastPost_url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: "Bearer " + token,
-//     },
-//     body: JSON.stringify({ userId }),
-//   })
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       let title = data.title;
-//       addPost_title.textContent = title;
-
-//       let content = data.content;
-//       addPost_content.textContent = content;
-
-//       let category = data.category;
-//       // addPost_category.textContent = category;
-
-//       console.log(title, content, category);
-//       return false;
-//       alert("文章新增成功");
-//       // window.location.href = index_url;
-
-//       window.location.href = "http://localhost:5500/index.html";
-//     })
-//     .catch((error) => {
-//       console.log(error);
-//       console.log("fail2");
-//     });
-// }

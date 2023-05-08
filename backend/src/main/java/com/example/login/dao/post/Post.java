@@ -20,17 +20,17 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
-    private String content;
+    //可移出優化
     private String author;
     private String title;
     private Date createAt;
-
+    private String content;
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id" )
     private Category category;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL ,fetch = FetchType.LAZY)

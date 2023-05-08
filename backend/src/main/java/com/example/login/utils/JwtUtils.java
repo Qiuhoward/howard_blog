@@ -80,6 +80,7 @@ public class JwtUtils {
                 .compact();
     }
 
+                                                                                                
 
     public RegisterResponse getTokenAndStoreToken(User user,boolean revoked) {
         var accessToken = generateToken(user);

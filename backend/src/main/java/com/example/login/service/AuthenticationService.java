@@ -1,6 +1,5 @@
 package com.example.login.service;
 
-import com.example.login.dao.user.Token;
 import com.example.login.dao.user.TokenRepo;
 import com.example.login.dto.blog.UserDto;
 import com.example.login.exception.InternalServerException;
